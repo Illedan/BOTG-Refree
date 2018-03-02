@@ -58,6 +58,3 @@ Items in each pricerange: 5
 |Golden|550|1300|
 |Legendary|1300|3000|
 
-## Code doc
-
-### TODO:
