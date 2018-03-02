@@ -596,7 +596,7 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        int shieldedVal = (int)(hero.maxHealth*0.07+hero0.maxMana*0.3);
+        int shieldedVal = (int)(hero.maxHealth*0.07+50+hero0.maxMana*0.3);
 
         int dmg = unit4.damage+unit5.damage;
         boolean result =  assertValue((int)3000, hero.health)
@@ -656,7 +656,7 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        int shieldedVal = (int)(hero.maxHealth*0.07+hero0.maxMana*0.3);
+        int shieldedVal = (int)(hero.maxHealth*0.07+50+hero0.maxMana*0.3);
 
         int dmg = unit4.damage+unit5.damage;
         boolean result =  assertValue((int)100, hero.health)
@@ -706,7 +706,7 @@ public class UnitTests {
             return false;
         }
 
-        return assertValue((int)(100+hero.maxHealth*0.07-unit4.damage-unit5.damage), hero.health)
+        return assertValue((int)(100+hero.maxHealth*0.07+50-unit4.damage-unit5.damage), hero.health)
                 && assertValue(0, hero.shield)
                 && assertValue(500-Const.EXPLOSIVESHIELDDAMAGE, unit4.health)
                 && assertValue(500-Const.EXPLOSIVESHIELDDAMAGE, unit5.health)
@@ -1176,6 +1176,23 @@ public class UnitTests {
                 && assertValue(health-13, hero.health)
                 && assertValue(true, unit2.isDead);
     }
+
+    public boolean moveCommand_infinity_noMovement_Test(){
+        Hero hero = players.get(0).heroes.get(0);
+        Const.game.allUnits.add(hero);
+        hero.x = 150;
+        hero.y = 205;
+
+        try{
+            doHeroCommandAndRun(players.get(0), "MOVE Infinity 49", 5);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(150, hero.x)
+                && assertDouble(205, hero.y);
+    }
+
 
     public boolean moveCommand_Test(){
         Hero hero = players.get(0).heroes.get(0);
