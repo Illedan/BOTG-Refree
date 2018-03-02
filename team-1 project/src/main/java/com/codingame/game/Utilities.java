@@ -8,7 +8,8 @@ public class Utilities {
     public static boolean isNumber(String s){
         try
         {
-            Double.parseDouble(s);
+            double d = Double.parseDouble(s);
+            if(Double.isInfinite(d)) return false;
         }catch (Exception e){
             return false;
         }

@@ -374,7 +374,7 @@ public class Skills {
 
         @Override
         void doSkill(Game game, double x, double y, int unitId) {
-            hero.explosiveShield=(int)(hero.maxHealth*0.07);
+            hero.explosiveShield=(int)(hero.maxHealth*0.07 + 50);
             game.events.add(new Event.ExplosiveShieldEvent(hero, (int)Math.round(duration)));
             Const.viewController.addEffect(hero, hero, "shield", duration);
         }
