@@ -20,7 +20,7 @@ TEAM-1 (Wildum, Illedan and AntiSquid)
 ### SKILLS:
 
 |HERO|NAME|MANACOST|COOLDOWN|DURATION|CASTTIME|RANGE|TARGETTYPE|TARGETTEAM|
-|--|--|--|--|--|--|--|--|
+|--|--|--|--|--|--|--|--|--|
 |VALKYRIE|SPEARFLIP|20|3|1|0.0|155|UNIT|BOTH|
 |VALKYRIE|JUMP|35|3|1|0.05|250|POSITION|ENEMY|
 |VALKYRIE|POWERUP|50|7|4|0.0|0|SELF|NONE|
@@ -65,3 +65,4 @@ Formula used to calculate end price. This is done after the creation given a pri
 ```
 Math.max(Math.ceil(totalCost/2), Math.ceil(totalCost-(totalCost*totalCost/6000)))
 ```
+
