@@ -4,6 +4,7 @@ TEAM-1 (Wildum, Illedan and AntiSquid)
 ## Bugs
 
 Pending: (Updated as soon as possible)
+- Fireball doesn't allways hit targets, because of a rounding error.
 - Dead hero in a bush, makes enemies in the same bush visible. Lasts the rest of the game.
 - Printing `MOVE NaN NaN`
 - 2 heroes killing a forrest creature at the exact same time with equal damage. Gives right player the kill.
