@@ -3,6 +3,10 @@ TEAM-1 (Wildum, Illedan and AntiSquid)
 
 ## Bugs
 
+Pending:
+- Possible to deny your allied unit if it has 40% of your hero's maxhp. 
+   - It is intended to be 40% of the unit's maxhp. (This check is done when the attack starts.)
+
 Fixed:
 - Valkyrie no longer deals damage to allied units when flipping them
 - Fireball doesn't allways hit targets, because of a rounding error.
