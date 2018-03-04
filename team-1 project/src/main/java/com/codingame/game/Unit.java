@@ -107,7 +107,7 @@ public abstract class Unit extends MovingEntity {
 
     void attackUnitOrMoveTowards(Unit unit, double t) {
         if(!allowedToAttack(unit)) return;
-        if(distance2(unit) < range*range) fireAttack(unit);
+        if(distance2(unit) <= range*range) fireAttack(unit);
         else Const.game.events.add(new Event.AttackMoveUnitEvent(this, unit));
     }
 

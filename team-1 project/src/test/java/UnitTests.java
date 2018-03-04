@@ -1070,6 +1070,53 @@ public class UnitTests {
                 && assertDouble((int)(590+yPull+movey), hero1.y);
     }
 
+    public boolean Attack_NotStopping_Test(){
+        String s = "100 540 3000 MainClass+Tower 0 1 |1820 540 3000 MainClass+Tower 1 2 |820 490 1450 MainClass+Hero 0 3 HULK|1100 490 1450 MainClass+Hero 1 4 HULK|855 490 1400 MainClass+Hero 0 5 VALKYRIE|1065 490 1400 MainClass+Hero 1 6 VALKYRIE|915 490 185 MainClass+Unit 0 7 |915 540 325 MainClass+Unit 0 8 |915 590 325 MainClass+Unit 0 9 |785 490 250 MainClass+Unit 0 10 |1005 490 185 MainClass+Unit 1 11 |1005 540 325 MainClass+Unit 1 12 |1005 590 325 MainClass+Unit 1 13 |1135 490 250 MainClass+Unit 1 14 |739 147 400 MainClass+Unit -1 15 |960 53 400 MainClass+Unit -1 16 |1181 147 400 MainClass+Unit -1 17";
+        String s2 = s.replaceAll("\\|", "-");
+        String[] unitDef = s2.split("-");
+        players.get(0).heroes.clear();
+        players.get(1).heroes.clear();
+        for(String def : unitDef){
+            String[] splittedDef = def.trim().split(" ");
+            try {
+                if(splittedDef.length < 5) continue;
+                if (def.contains("Tower") ||  splittedDef[4].equals("-1")) continue;
+                int x = Integer.parseInt(splittedDef[0]);
+                int y = Integer.parseInt(splittedDef[1]);
+                int health = Integer.parseInt(splittedDef[2]);
+                int team = Integer.parseInt(splittedDef[4]);
+                int id = Integer.parseInt(splittedDef[5]);
+                if (def.contains("Hero") && def.contains("HULK")) {
+                    Hero hero = Factories.generateHero(splittedDef[6], players.get(team), new Point(x, y));
+                    hero.team = team;
+                    hero.health = health;
+                    hero.id = id;
+                    Const.game.allUnits.add(hero);
+                    players.get(team).heroes.add(hero);
+                } else if(id==11 || id==7){
+                    Unit unit = new LaneUnit(x, y, health, team, 150, new Point(960, 540), players.get(team));
+                    unit.team = team;
+                    unit.id = id;
+                    Const.game.allUnits.add(unit);
+                }
+            }catch (Exception e){
+                System.err.println(def);
+                e.printStackTrace();
+            }
+        }
+
+        try{
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"ATTACK 7", "ATTACK 7"});
+            players.get(1).handlePlayerOutputs(new String[]{"ATTACK 11", "ATTACK 11"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(1100, players.get(1).heroes.get(0).x);
+    }
+
     public boolean cleric_spell2_DrainMana_Test(){
         createAndReplaceHero("DOCTOR_STRANGE", 400, 400, 100, 200, 100);
         Hero hero0 = players.get(0).heroes.get(0);
