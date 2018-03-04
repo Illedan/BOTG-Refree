@@ -128,7 +128,7 @@ public abstract class Unit extends MovingEntity {
 
     boolean canAttack(Unit unit){
         if(!allowedToAttack(unit)) return false; // You shall not pass
-        if(unit.team == team && unit.health > maxHealth * Const.DENYHEALTH) return false; // Cant deny healthy creep
+        if(unit.team == team && unit.health > unit.maxHealth * Const.DENYHEALTH) return false; // Cant deny healthy creep
         if(distance2(unit) > range*range) return false; // Cant attack far far away
         return true;
     }

@@ -1572,6 +1572,39 @@ public class UnitTests {
         return assertValue(hero0health-unit2.damage, hero0.health) && assertValue(unit0Health-unit2.damage, unit.health);
     }
 
+
+    public boolean denyingHealthyCreature_NotAllowed_Test(){
+        Hero hero0 = createAndReplaceHero("VALKYRIE", 150, 150, 500, 500, 200);
+        hero0.damage = 50;
+        Const.game.allUnits.add(hero0);
+
+        LaneUnit unit = new LaneUnit(200,200,150,0,50, new Point(0,0), players.get(1));
+        unit.maxHealth = 150;
+        unit.goldValue = 1337;
+        Const.game.allUnits.add(unit);
+
+        try{
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"ATTACK " + unit.id});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            System.err.println(e);
+            return false;
+        }
+        boolean result = assertValue(0, players.get(0).denies) && assertValue(150, unit.health);
+        unit.health = 50;
+        try{
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"ATTACK " + unit.id});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            System.err.println(e);
+            return false;
+        }
+
+        return result && assertValue(1, players.get(0).denies) && assertValue(true, unit.isDead);
+    }
+
     public boolean concurrentHits_highestDamageGetsDeny_Test(){
         Hero hero0 = Factories.generateHero("VALKYRIE", players.get(0), new Point(0,0));
         hero0.damage = 50;
@@ -1586,6 +1619,7 @@ public class UnitTests {
         Const.game.allUnits.add(hero1);
 
         LaneUnit unit = new LaneUnit(10,10,150,1,100, new Point(0,0), players.get(1));
+        unit.maxHealth = 500;
         unit.team = 1;
         unit.goldValue = 1337;
         Const.game.allUnits.add(unit);
@@ -1620,6 +1654,7 @@ public class UnitTests {
         Const.game.allUnits.add(hero1);
 
         LaneUnit unit = new LaneUnit(10,10,150,1,100, new Point(0,0), players.get(1));
+        unit.maxHealth = 500;
         unit.team = 1;
         unit.goldValue = 1337;
         Const.game.allUnits.add(unit);

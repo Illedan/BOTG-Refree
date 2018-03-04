@@ -67,18 +67,11 @@ public class Const {
     static int NEUTRALSPAWNTIME = 4;
     static int NEUTRALSPAWNRATE = 40;
     static int NEUTRALGOLD = 100;
-		static int NEUTRALAGGRORANGE = 600;
 
 //SPELLS
     // KNIGHT
     public static double EXPLOSIVESHIELDRANGE2 = 151*151;
     public static int EXPLOSIVESHIELDDAMAGE = 50;
-
-
-    // DOCTOR STRANGE
-    public static double REPELRADIUS = 150;
-    public static double REPELPUSHDISTANCE = 200;
-
 
     // LANCER
     public static int POWERUPMOVESPEED = 0;
@@ -103,17 +96,6 @@ public class Const {
 
     // avatars
     static String MAGEAVATAR = "mage.png";
-
-    // attack projectile and missile sprites
-    static String ATTACK = "attackMissile.png";
-
-    // skill and spell sprites
-    static String FIREBALL = "fireBall.png";
-    static String BURNINGGROUND = "burningGround.png";
-    static String BLINK = "blink.png";
-    static String PELLETS = "pellets.png";
-    static String MISSILE = "missile.png";
-    static String WIREHOOK = "wirehook.png";
 
     // environment sprites
     static String BACKGROUND = "background.jpg";

@@ -16,8 +16,4 @@ public class Point {
     public double distance2(Point p) {
     	return ((this.x - p.x) * (this.x - p.x) + (this.y - p.y) * (this.y - p.y));
     }
-
-    boolean isInRange(Point p, double range) {
-        return p != this && distance(p) <= range;
-    }
 }

@@ -27,9 +27,6 @@ public class Utilities {
         return s * (int) ((s * x) + 0.5);
     }
 
-    public static String join(Object... args) {
-        return Stream.of(args).map(String::valueOf).collect(Collectors.joining(" "));
-    }
 
     public static double timeToReachTarget(Point start, Point stop, double speed){
         return start.distance(stop)/speed;
