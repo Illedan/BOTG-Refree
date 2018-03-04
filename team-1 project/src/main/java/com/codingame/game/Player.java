@@ -170,7 +170,7 @@ public class Player extends AbstractPlayer {
                     }
                 }
 
-                printError(getNicknameToken() + " tried to use an invalid command. Invalid parameters or name. Command was: " + roundOutputSplitted[0]);
+                printError(getNicknameToken() + " tried to use a spell not found on  " + hero.heroType+ ". Input was: " + roundOutputSplitted[0]);
             }else{
                 printError(getNicknameToken() + " tried to use an invalid command. Invalid parameters or name. Command was: " + roundOutputSplitted[0]);
             }

@@ -21,6 +21,11 @@ public class Main {
         gameRunner.addAgent(SimpleWaitBot.class);
         gameRunner.addAgent(SimpleWaitBot.class);
 
+        // Example of running another language than Java. It would be the same arguments in front of the path used in a console.
+
+        // C# (mono is needed on a mac)
+        //gameRunner.addAgent("mono /Users/myuser/Projects/BotG/CG.BotG/bin/Debug/CG.BotG.exe");
+
         gameRunner.start();
     }
 }

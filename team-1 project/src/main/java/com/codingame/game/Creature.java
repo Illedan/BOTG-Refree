@@ -7,7 +7,7 @@ public class Creature extends Unit {
     Point camp;
     CreatureState state = CreatureState.peacefull;
     String creatureType;
-    Creature(double x, double y) {
+    public Creature(double x, double y) {
         super(x, y, 1, -1, 300, null);
         this.camp = new Point(x, y);
     }

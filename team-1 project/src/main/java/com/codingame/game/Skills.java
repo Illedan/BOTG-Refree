@@ -27,6 +27,7 @@ public class Skills {
             this.cooldown = 0;
         }
 
+        public abstract double CastTime();
         abstract void doSkill(Game game, double x, double y, int unitId);
 
         public int getDuration(){return (duration<1?1:(int)(Math.round(duration))); }
@@ -35,7 +36,6 @@ public class Skills {
 
     }
 
-    //TODO: REMOVE when all skills are added.
     static class EmptySkill extends SkillBase{
         EmptySkill() { super(null, 100000, "NONE", 0, Const.Rounds+1); }
         @Override
@@ -48,6 +48,8 @@ public class Skills {
 
         @Override
         public SkillType getTargetType() { return SkillType.SELF; }
+        @Override
+        public double CastTime(){return 0.0;}
     }
 
     static class BlinkSkill extends SkillBase{
@@ -74,6 +76,9 @@ public class Skills {
         }
 
         @Override
+        public double CastTime(){return duration;}
+
+        @Override
         public String getTargetTeam() {
             return "NONE";
         }
@@ -86,7 +91,6 @@ public class Skills {
 
     // Lancer skills
     static class JumpSkill extends SkillBase{
-        double duration;
         JumpSkill(Hero hero, int manaCost, String skillName, double duration, int range, int cooldown) {
             super(hero, manaCost, skillName, range, cooldown);
             this.duration = duration;
@@ -105,6 +109,9 @@ public class Skills {
             game.events.add(new Event.AttackNearestDelayed(hero, duration+Const.EPSILON));
            // Const.viewController.addEffect(hero, target, "jump", duration);
         }
+
+        @Override
+        public double CastTime(){return duration;}
 
         @Override
         public String getTargetTeam() {
@@ -128,15 +135,17 @@ public class Skills {
             Unit target = Const.game.getUnitOfId(unitId);
             if(target.distance(hero) <= range){
                 game.events.add(new Event.StunEvent(target, 0, 1));
-                game.events.add(new Event.DamageEvent(target, hero, duration, (int)(hero.damage*0.4)));
+                if(target.team != hero.team)
+                    game.events.add(new Event.DamageEvent(target, hero, duration, (int)(hero.damage*0.4)));
 
                 double vx = (hero.x-target.x)*2/duration;
                 double vy = (hero.y-target.y)*2/duration;
                 game.events.add(new Event.SpeedChangedForceEvent(target, Const.EPSILON, vx, vy));
                 game.events.add(new Event.SpeedChangedForceEvent(target, duration, vx*-1, vy*-1));
-             //   Const.viewController.addEffect(target, new Point((hero.x-target.x)*2+hero.x, (hero.y -target.y)*2+hero.y), "flip", duration);
             } else Const.viewController.addSummary("Can't flip target outside range.");
         }
+        @Override
+        public double CastTime(){return 0.0;}
 
         @Override
         public String getTargetTeam() {
@@ -164,6 +173,8 @@ public class Skills {
             game.events.add(new Event.PowerUpEvent(hero, 0, 10, dmgIncrease, (int)duration));
             Const.viewController.addEffect(hero, null, "powerup", duration);
         }
+        @Override
+        public double CastTime(){return 0.0;}
 
         @Override
         public String getTargetTeam() {
@@ -197,6 +208,8 @@ public class Skills {
                 Const.viewController.addEffect(hero, target, "heal", duration);
             }else Const.viewController.addSummary("Can't heal outside range.");
         }
+        @Override
+        public double CastTime(){return duration;}
 
         @Override
         public String getTargetTeam() {
@@ -229,6 +242,8 @@ public class Skills {
                 Const.viewController.addEffect(hero, target, "burning", duration);
             } else Const.viewController.addSummary("Can't burn ground outside range.");
         }
+        @Override
+        public double CastTime(){return duration;}
 
         @Override
         public String getTargetTeam() {
@@ -257,6 +272,9 @@ public class Skills {
                 Const.viewController.addEffect(hero, target, "shield", duration);
             } else Const.viewController.addSummary("Can't shield hero outside range");
         }
+
+        @Override
+        public double CastTime(){return 0.0;}
 
         @Override
         public String getTargetTeam() {
@@ -289,11 +307,14 @@ public class Skills {
                     game.events.add(new Event.SpeedChangedForceEvent(unit, delay+duration, vx*-1, vy*-1));
                     game.events.add(new Event.StunEvent(unit, delay, 1));
                 }
-                if(unit instanceof Hero)
+
+                if(unit instanceof Hero && unit.team != hero.team)
                     game.events.add(new Event.DrainManaEvent(unit, delay+duration, ((Hero)unit).manaregeneration*3 + 5, hero));
 
             }else Const.viewController.addSummary("Can't pull target outside range.");
         }
+        @Override
+        public double CastTime(){return delay;}
 
         @Override
         public String getTargetTeam() {
@@ -328,6 +349,8 @@ public class Skills {
                 }
             }else Const.viewController.addSummary("Can't charge further than range.");
         }
+        @Override
+        public double CastTime(){return duration;}
 
         @Override
         public String getTargetTeam() {
@@ -354,6 +377,8 @@ public class Skills {
                 game.events.add(new Event.StunEvent(target, hero.attackTime, (int)duration));
             }else Const.viewController.addSummary("Can't bash unit outside range.");
         }
+        @Override
+        public double CastTime(){return hero.attackTime;}
 
         @Override
         public String getTargetTeam() {
@@ -378,6 +403,8 @@ public class Skills {
             game.events.add(new Event.ExplosiveShieldEvent(hero, (int)Math.round(duration)));
             Const.viewController.addEffect(hero, hero, "shield", duration);
         }
+        @Override
+        public double CastTime(){return 0.0;}
 
         @Override
         public String getTargetTeam() {
@@ -403,6 +430,8 @@ public class Skills {
             game.events.add(new Event.CounterEvent(hero, duration-Const.EPSILON, range));
             Const.viewController.addEffect(hero, null, "counter", duration);
         }
+        @Override
+        public double CastTime(){return 0.0;}
 
         @Override
         public String getTargetTeam() {
@@ -428,6 +457,8 @@ public class Skills {
             hero.runTowards(new Point(x, y), hero.moveSpeed);
             Const.viewController.addEffect(hero, null, "invis", duration);
         }
+        @Override
+        public double CastTime(){return 1.0;}
 
         @Override
         public String getTargetTeam() {
@@ -445,8 +476,6 @@ public class Skills {
         int stun_time;
         double speed;
         double flyTime;
-
-        //TODO: Make only 1 event. Then recalc next collision every time a unit has speedchange.
 
 
         WireHookSkill(Hero hero, int manaCost, String skillName, int range, int radius, int stun_time, double duration, int cooldown) {
@@ -483,6 +512,8 @@ public class Skills {
 
             Const.game.events.add(new Event.WireEvent(possibleTargets, lowestT, lineSpellUnit, stun_time, hero, radius, duration, 0.5));
         }
+        @Override
+        public double CastTime(){return 0.0;}
 
         @Override
         public String getTargetTeam() {
@@ -523,11 +554,13 @@ public class Skills {
 
             for(Unit unit : Const.game.allUnits){
                 if(unit.team != hero.team && (unit instanceof Hero || unit instanceof Creature)){
-                    double collisionT = Utilities.getCollisionTime(lineSpellUnit, unit, radius);
+                    double collisionT = Utilities.getCollisionTime(lineSpellUnit, unit, radius-Const.EPSILON);
                     Const.game.events.add(new Event.LineEffectEvent(unit, collisionT < 0 ? duration : collisionT, lineSpellUnit, (int)(0.2*hero.mana), hero, radius, duration, 55));
                 }
             }
         }
+        @Override
+        public double CastTime(){return 0.0;}
 
         @Override
         public String getTargetTeam() {

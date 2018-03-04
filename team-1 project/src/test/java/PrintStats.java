@@ -1,14 +1,6 @@
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import com.codingame.game.*;
-import com.codingame.gameengine.module.entities.Entity;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-
-import tooltipModule.TooltipModule;
 
 public class PrintStats {
 
@@ -38,13 +30,13 @@ public class PrintStats {
         System.out.println();
         System.out.println("### SKILLS:");
         System.out.println();
-        System.out.println("|HERO|NAME|MANACOST|COOLDOWN|DURATION|RANGE|TARGETTYPE|TARGETTEAM|" );
-        System.out.println("|--|--|--|--|--|--|--|--|");
+        System.out.println("|HERO|NAME|MANACOST|COOLDOWN|DURATION|CASTTIME|RANGE|TARGETTYPE|TARGETTEAM|" );
+        System.out.println("|--|--|--|--|--|--|--|--|--|");
         for(Unit unit : units){
             if(unit instanceof Hero){
                 Hero hero = (Hero)unit;
                 for(Skills.SkillBase skill : hero.skills){
-                    System.out.println("|" + hero.heroType + "|"+skill.skillName + "|" + skill.manaCost + "|" + skill.initialCooldown + "|"+ skill.getDuration() + "|" + skill.range + "|" + skill.getTargetType()+"|"+skill.getTargetTeam()+"|");
+                    System.out.println("|" + hero.heroType + "|"+skill.skillName + "|" + skill.manaCost + "|" + skill.initialCooldown + "|"+ skill.getDuration() + "|" + skill.CastTime() + "|" + skill.range + "|" + skill.getTargetType()+"|"+skill.getTargetTeam()+"|");
                 }
             }
         }
@@ -61,9 +53,14 @@ public class PrintStats {
         System.out.println();
         System.out.println("### ITEM PRICERANGES:");
         System.out.println();
-        System.out.println("Items in each pricerange: " + Const.NB_ITEMS_PER_LEVEL);
+        System.out.println("Every game includes 3 potions: 500 health, 100 health and 50 mana.");
         System.out.println();
-        System.out.println("|PRICERANGE|MIN|MAX|" );
+        System.out.println("Items in each pricerange: " + Const.NB_ITEMS_PER_LEVEL + ".");
+        System.out.println();
+
+
+        System.out.println();
+        System.out.println("|PRICE RANGE|MIN|MAX|" );
         System.out.println("|--|--|--|");
         for(int i = 0; i < MapFactory.ItemLevels.length; i++){
             String prefix = "";
@@ -74,6 +71,8 @@ public class PrintStats {
             System.out.println("|"+prefix+"|" + MapFactory.ItemLevels[i][0] + "|" + MapFactory.ItemLevels[i][1]+"|");
         }
 
+        System.out.println();
+        System.out.println("Formula used to calculate end price. This is done after the creation given a price range:\n```\nMath.max(Math.ceil(totalCost/2), Math.ceil(totalCost-(totalCost*totalCost/6000)))\n```");
 
     }
 

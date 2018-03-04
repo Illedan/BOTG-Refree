@@ -1,5 +1,6 @@
 package com.codingame.game;
 
+import java.io.Console;
 import java.util.Arrays;
 import java.util.Properties;
 import java.util.Random;
@@ -130,13 +131,24 @@ public class Referee extends AbstractReferee {
             }
         }
 
+        if(turn == Const.Rounds-1 && gameManager.getActivePlayers().size() == 2){
+            int score0 = gameManager.getActivePlayers().get(0).getScore();
+            int score1 = gameManager.getActivePlayers().get(1).getScore();
+            if(score0==score1){
+                gameManager.addTooltip(new Tooltip(0, gameManager.getActivePlayers().get(0).getNicknameToken()+" draw"));
+                gameManager.addTooltip(new Tooltip(1, gameManager.getActivePlayers().get(1).getNicknameToken()+" draw"));
+            }else if(score0 > score1){
+                gameManager.addTooltip(new Tooltip(1, gameManager.getActivePlayers().get(1).getNicknameToken()+ " loses. Has less creep kills + denies"));
+            }else{
+                gameManager.addTooltip(new Tooltip(0, gameManager.getActivePlayers().get(0).getNicknameToken()+ " loses. Has less creep kills + denies"));
+            }
+        }
         if (gameManager.getActivePlayers().size() < 2 ) {
             gameManager.endGame();
         }else{
             for(String msg : Const.viewController.summaries) {
                 gameManager.addToGameSummary(msg);
             }
-
         }
     }
 
@@ -155,7 +167,10 @@ public class Referee extends AbstractReferee {
             Point spawn = player.getIndex() == 0 ? (player.heroes.size() == 0 ? Const.HEROSPAWNTEAM0 : Const.HEROSPAWNTEAM0HERO2) : (player.heroes.size() == 0 ? Const.HEROSPAWNTEAM1 : Const.HEROSPAWNTEAM1HERO2);
             output = player.getOutputs().get(0);
             if( player.heroes.size() > 0 && player.heroes.get(0).heroType.equals(output) ){
-              throw new Exception(" You already have this hero. Hero: " + output);
+                player.setScore(LostScore);
+                player.deactivate(player.getNicknameToken() + " tried to pick a hero already owned. Can't have duplicate hero.");
+                gameManager.addToGameSummary(player.getNicknameToken() + " tried to pick a hero already owned. Can't have duplicate hero.");
+                return;
             } else {
               Hero hero = Factories.generateHero(output, player, spawn);
               player.addHero(hero);
@@ -167,6 +182,7 @@ public class Referee extends AbstractReferee {
         } catch (IndexOutOfBoundsException | IllegalArgumentException e) {
             player.setScore(LostScore);
             player.deactivate(player.getNicknameToken() + " supplied an invalid hero name: " + output);
+            gameManager.addToGameSummary(player.getNicknameToken() + " supplied an invalid hero name: " + output);
         } catch (Exception e){
             player.setScore(LostScore);
             String errorMessage = e.getMessage();

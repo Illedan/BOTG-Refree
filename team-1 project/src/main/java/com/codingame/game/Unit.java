@@ -138,7 +138,6 @@ public abstract class Unit extends MovingEntity {
 
         double attackTravelTime = Math.min(1.0, attackTime + (isMelee() ? 0 : attackTime * distance(unit) / range));
         if(Const.game.t+attackTravelTime > 1.0) {
-            //System.err.println("Cant attack: " + t + " - " + attackTravelTime + " - " + this.getType().toString());
             return; // no attacks cross rounds.
         }
 

@@ -125,6 +125,10 @@ public class Game {
             boolean anyHero = target instanceof Hero;
 
             Unit highestDamageUnit = null;
+
+            // Used when 2 meele attacks groot
+            Unit otherAttacker = null;
+
             int highestDmg = 0;
 
             for(Damage dmg : dmgs){
@@ -140,9 +144,12 @@ public class Game {
                     dmg.attacker.invisibleBySkill = false;
 
                 // Highest damage or attackers advantage.
-                if(dmg.damage > highestDmg || (dmg.damage == highestDmg && dmg.attacker.team != dmg.target.team)){
+                if(dmg.damage > highestDmg || (dmg.damage == highestDmg && dmg.attacker.team == 1 - dmg.target.team)){
                     highestDamageUnit = dmg.attacker;
                     highestDmg = dmg.damage;
+                    otherAttacker = null;
+                }else if(dmg.damage == highestDmg && dmg.target.team==-1 && dmg.attacker.team != highestDamageUnit.team){
+                    otherAttacker = dmg.attacker;
                 }
             }
             if(totalDamage > 0 && target.getShield() > 0) {
@@ -190,6 +197,11 @@ public class Game {
                     target.goldValue = 0;
                 }
 
+                if(otherAttacker != null && otherAttacker instanceof Hero){
+                    otherAttacker.player.unitKills++;
+                    otherAttacker.player.gold += target.goldValue;
+                }
+
                 if(highestDamageUnit.player != null)
                     highestDamageUnit.player.gold += target.goldValue;
 
@@ -228,6 +240,7 @@ public class Game {
         visibleHeroes.clear();
         for (Player player : players) {
             for (Hero hero : player.heroes) {
+                if(hero.isDead) continue;
                 visibleHeroes.add(hero);
                 if(!hero.invisibleBySkill) {
                     if(hero.visible) hero.becomingInvis = true;

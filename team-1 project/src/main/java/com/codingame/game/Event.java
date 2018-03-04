@@ -618,7 +618,7 @@ public abstract class Event {
 
             if(affectedUnit == this.unit && hasAnyOutcome(outcome, SPEEDCHANGED, TELEPORTED)){
                 movingSpell.moveIgnoreEdges(currentTime);
-                double colT = Utilities.getCollisionTime(movingSpell, this.unit, radius);
+                double colT = Utilities.getCollisionTime(movingSpell, this.unit, radius-Const.EPSILON);
                 if(colT >= 0)
                     t = colT;
                 else t = 2;

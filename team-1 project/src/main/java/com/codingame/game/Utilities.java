@@ -10,6 +10,7 @@ public class Utilities {
         {
             double d = Double.parseDouble(s);
             if(Double.isInfinite(d)) return false;
+            if(Double.isNaN(d)) return false;
         }catch (Exception e){
             return false;
         }
@@ -39,6 +40,9 @@ public class Utilities {
         if (entity.distance(entity1) <= radius) {
             return 0.0;
         }
+
+        // Fixes rounding errors.
+        radius-=Const.EPSILON;
 
         // Both units are motionless
         if (entity.vx == 0.0 && entity.vy == 0.0 && entity1.vx == 0.0 && entity1.vy == 0.0) {

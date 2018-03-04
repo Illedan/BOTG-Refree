@@ -246,6 +246,39 @@ public class UnitTests {
         return assertValue(true, hero0.health < hero0Health-0.2*hero.mana);
     }
 
+
+    public boolean ironman_fireballNotHittingEnemiesTest_Test(){
+        Hero hero = createAndReplaceHero("IRONMAN", 233, 550, 100, 200, 100);
+        Hero hero1 = players.get(1).heroes.get(0);
+        hero1.moveSpeed = 212;
+        hero1.x = 582;
+        hero1.y = 380;
+        int health1 = hero1.health;
+        Const.game.allUnits.add(hero1);
+
+        Hero hero2 = Factories.generateHero("HULK", players.get(1), new Point(582, 380));
+        hero2.moveSpeed = 200;
+        hero2.team = 1;
+        int health2 = hero2.health;
+        players.get(1).heroes.add(hero2);
+        Const.game.allUnits.add(hero2);
+
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"FIREBALL 582 380"});
+            players.get(1).handlePlayerOutputs(new String[]{"MOVE 582 380", "MOVE 582 380"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        int fbDmg = (int)(55*((hero.distance(hero1)-50)/1000)+(int)(0.2*hero.mana));
+
+        return assertValue((int)(health1-fbDmg), hero1.health)
+                && assertValue((int)(health2-fbDmg), hero2.health);
+    }
+
     public boolean ironman_spell1_JustOutside_Test(){
         Hero hero = createAndReplaceHero("IRONMAN", 40, 40, 100, 200, 100);
         Hero hero1 = players.get(1).heroes.get(0);
@@ -831,7 +864,125 @@ public class UnitTests {
                 && assertDouble(h, hero0.health);
     }
 
+    public boolean groot_dies_shouldStopInRange_Test(){
+        Hero hero = createAndReplaceHero("HULK", 600, 400, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(1), new Point(560, 560));
+        hero0.team=1;
+        hero.damage = 100;
+        hero0.damage = 100;
+        hero0.moveSpeed = 200;
+        Const.game.allUnits.add(hero0);
+        players.get(1).heroes.clear();
+        players.get(1).heroes.add(hero0);
+        Creature groot = new Creature(600, 600);
+        groot.health = 99;
+        Const.game.allUnits.add(groot);
 
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            players.get(1).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(groot.y-hero.range, hero.y)
+                && assertDouble(600, hero.x);
+    }
+
+
+    public boolean groot_KilledByDifferentTime_Test(){
+        Hero hero = createAndReplaceHero("HULK", 600, 700, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(1), new Point(560, 560));
+        hero0.team=1;
+        hero.damage = 100;
+        hero0.damage = 100;
+        hero0.moveSpeed = 200;
+        Const.game.allUnits.add(hero0);
+        players.get(1).heroes.clear();
+        players.get(1).heroes.add(hero0);
+        Creature groot = new Creature(600, 600);
+        groot.health = 99;
+        groot.goldValue = 1337;
+        Const.game.allUnits.add(groot);
+        players.get(1).gold=1;
+
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            players.get(1).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertValue(0, players.get(0).gold)
+                && assertValue(1338, players.get(1).gold);
+    }
+
+
+    public boolean groot_KilledByDifferentDmg_Test(){
+        Hero hero = createAndReplaceHero("HULK", 555, 555, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(1), new Point(560, 560));
+        hero0.team=1;
+        hero.damage = 101;
+        hero0.damage = 100;
+        hero0.moveSpeed = 200;
+        Const.game.allUnits.add(hero0);
+        players.get(1).heroes.clear();
+        players.get(1).heroes.add(hero0);
+        Creature groot = new Creature(600, 600);
+        groot.health = 150;
+        groot.goldValue = 1337;
+        Const.game.allUnits.add(groot);
+        players.get(1).gold=1;
+
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            players.get(1).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertValue(1337, players.get(0).gold)
+                && assertValue(1, players.get(1).gold);
+    }
+
+    public boolean groot_KilledBy2Teams_BothGetsGold_Test(){
+        Hero hero = createAndReplaceHero("HULK", 555, 555, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(1), new Point(560, 560));
+        hero0.team=1;
+        hero.damage = 100;
+        hero0.damage = 100;
+        hero0.moveSpeed = 200;
+        Const.game.allUnits.add(hero0);
+        players.get(1).heroes.clear();
+        players.get(1).heroes.add(hero0);
+        Creature groot = new Creature(600, 600);
+        groot.health = 150;
+        groot.goldValue = 1337;
+        Const.game.allUnits.add(groot);
+        players.get(1).gold=1;
+
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            players.get(1).handlePlayerOutputs(new String[]{"ATTACK " +groot.id});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertValue(1337, players.get(0).gold)
+                && assertValue(1338, players.get(1).gold);
+    }
 
     public boolean knight_jumpsKnight_spell0_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
@@ -886,6 +1037,37 @@ public class UnitTests {
         runRound(5);
 
         return result && assertValue(200, unit4.moveSpeed);
+    }
+
+    public boolean cleric_Pull_CheckBug_Test(){
+        Hero hero = createAndReplaceHero("DOCTOR_STRANGE", 823, 546, 100, 200, 100);
+        players.get(1).heroes.clear();
+        Hero hero1 = Factories.generateHero("VALKYRIE", players.get(1), new Point(989, 590));
+        Const.game.allUnits.add(hero1);
+        hero1.team=1;
+        players.get(1).heroes.add(hero1);
+        LaneUnit unit = new LaneUnit(899, 590, 200, 0, 150, new Point(2000, 540), players.get(0));
+        unit.team = 0;
+        Const.game.allUnits.add(unit);
+
+        double dist = hero.distance(hero1);
+        double xPull = (int)((hero.x-hero1.x)/dist*200);
+        double yPull = (int)((hero.y-hero1.y)/dist*200);
+
+        double movex = hero1.moveSpeed*0.1;
+        double movey = 0;
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(1).handlePlayerOutputs(new String[]{"MOVE " +(hero1.x+hero1.moveSpeed*0.1) + " " + hero1.y});
+            players.get(0).handlePlayerOutputs(new String[]{"PULL " + hero1.id});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble((int)(989+xPull+movex), hero1.x)
+                && assertDouble((int)(590+yPull+movey), hero1.y);
     }
 
     public boolean cleric_spell2_DrainMana_Test(){
@@ -1023,6 +1205,29 @@ public class UnitTests {
                 && assertValue(50, unit4.health);
     }
 
+
+    public boolean heroDiesInBush_cantseeEnemy_Test(){
+        Hero hero0 = createAndReplaceHero("DEADPOOL", 60, 60, 100, 142, 100);
+        Hero hero1 = players.get(1).heroes.get(0);
+        hero1.x = 60;
+        hero1.y = 60;
+        hero1.health=10;
+        players.get(1).heroes.add(Factories.generateHero("IRONMAN", players.get(1), new Point(500,500)));
+
+        Const.game.bushes.add(new Bush(60, 60));
+        Const.game.allUnits.add(hero1);
+
+        try {
+            doHeroCommandAndRun(players.get(0), "ATTACK " +hero1.id, 5);
+        }catch (Exception e){
+            System.err.println(e.getStackTrace());
+            return false;
+        }
+
+        boolean result = assertValue(true, hero0.visible);
+        runRound(5);
+        return result && assertValue(false, hero0.visible);
+    }
 
     public boolean ninja_spell2_InBush_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 40, 40, 100, 142, 100);
