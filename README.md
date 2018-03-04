@@ -4,7 +4,7 @@ TEAM-1 (Wildum, Illedan and AntiSquid)
 ## Bugs
 
 Fixed:
-- Attacking a unit when distance to the unit matches hero's range. (exact match)
+- Attacking a unit when distance to the unit matches hero's range. (exact match at start of turn)
 	- This caused the hero to move towards the target.
 - Possible to deny your allied unit if it has 40% of your hero's maxhp. 
    - It is intended to be 40% of the unit's maxhp. (This check is done when the attack starts.)
