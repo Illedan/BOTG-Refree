@@ -4,6 +4,7 @@ TEAM-1 (Wildum, Illedan and AntiSquid)
 ## Bugs
 
 Pending:
+- Attacking a unit when distance to the unit matches hero's range.
 - Possible to deny your allied unit if it has 40% of your hero's maxhp. 
    - It is intended to be 40% of the unit's maxhp. (This check is done when the attack starts.)
 
