@@ -746,6 +746,73 @@ public class UnitTests {
                 && assertValue(500, unit6.health);
     }
 
+    public boolean doubleMoveMent_oneDead_Test(){
+        Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(1), new Point(60, 60));
+        hero0.team = 0;
+        Const.game.allUnits.add(hero0);
+        players.get(0).heroes.add(hero0);
+        hero.isDead = true;
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"MOVE 150 100"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(40, hero.x)
+                && assertDouble(40, hero.y)
+                && assertDouble(150, hero0.x)
+                && assertDouble(100, hero0.y);
+    }
+
+    public boolean doubleMoveMent_firstStunned_Test(){
+        Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(60, 60));
+        hero0.team = 0;
+        Const.game.allUnits.add(hero0);
+        players.get(0).heroes.add(hero0);
+        hero.stunTime = 3;
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"MOVE 100 101", "MOVE 150 100"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(40, hero.x)
+                && assertDouble(40, hero.y)
+                && assertDouble(150, hero0.x)
+                && assertDouble(100, hero0.y);
+    }
+
+    public boolean doubleMoveMent_oneStunned_Test(){
+        Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(60, 60));
+        hero0.team = 0;
+        Const.game.allUnits.add(hero0);
+        players.get(0).heroes.add(hero0);
+        hero0.stunTime = 3;
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"MOVE 100 101", "MOVE 150 100"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(100, hero.x)
+                && assertDouble(101, hero.y)
+                && assertDouble(60, hero0.x)
+                && assertDouble(60, hero0.y);
+    }
+
+
     public boolean knight_spell0_JumpWhenBashed_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         players.get(1).heroes.clear();
