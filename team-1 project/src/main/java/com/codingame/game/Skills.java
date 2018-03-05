@@ -69,7 +69,7 @@ public class Skills {
                 target.y = hero.y + ((target.y-hero.y) / distance * range);
             }
 
-            hero.mana += 20;
+            hero.mana = Math.min(hero.mana+20, hero.maxMana);
 
             game.events.add(new Event.BlinkEvent(hero, duration, Utilities.round(target.x), Utilities.round(target.y)));
             Const.viewController.addEffect(hero, target, "blink", duration);
@@ -204,7 +204,7 @@ public class Skills {
         void doSkill(Game game, double x, double y, int unitId) {
             Point target = new Point(x,y);
             if(target.distance(hero) <= range){
-                game.events.add(new Event.HealthChangeEvent(target, duration, radius, (int)(0.2*hero.mana), false, hero));
+                game.events.add(new Event.HealthChangeEvent(target, duration, radius, (int)(0.2*(hero.mana+manaCost)), false, hero));
                 Const.viewController.addEffect(hero, target, "heal", duration);
             }else Const.viewController.addSummary("Can't heal outside range.");
         }
@@ -238,7 +238,7 @@ public class Skills {
         void doSkill(Game game, double x, double y, int unitId) {
             Point target = new Point(x,y);
             if(target.distance(hero) <= range+Const.EPSILON){
-                game.events.add(new Event.HealthChangeEvent(target, duration, radius, -1*(hero.manaregeneration*3+30), true, hero));
+                game.events.add(new Event.HealthChangeEvent(target, duration, radius, -1*(hero.manaregeneration*5+30), true, hero));
                 Const.viewController.addEffect(hero, target, "burning", duration);
             } else Const.viewController.addSummary("Can't burn ground outside range.");
         }
@@ -267,7 +267,7 @@ public class Skills {
         void doSkill(Game game, double x, double y, int unitId) {
             Unit target = Const.game.getUnitOfId(unitId);
             if(target.distance(hero) <= range){
-                target.shield = Math.max(target.shield, (int)(0.3*hero.maxMana));
+                target.shield = Math.max(target.shield, (int)(0.5*hero.maxMana + 50));
                 game.events.add(new Event.ShieldEvent(target, (int)duration));
                 Const.viewController.addEffect(hero, target, "shield", duration);
             } else Const.viewController.addSummary("Can't shield hero outside range");
@@ -343,7 +343,13 @@ public class Skills {
 
                 game.events.add(new Event.BlinkEvent(hero, duration, target.x, target.y));
                 if (target.team != hero.team) {
+
+                    //Reduce dmg on his attack on the delayed attack
+                    int halfDmg = hero.damage/2;
+                    hero.damage-=halfDmg;
+                    game.events.add(new Event.PowerUpEvent(hero, 0, 0, -halfDmg, 0));
                     game.events.add(new Event.DelayedAttackEvent(target, hero, duration+Const.EPSILON));
+
                     game.events.add(new Event.PowerUpEvent(target, 150, 0, 0, 0));
                     game.events.add(new Event.PowerUpEvent(target, -150, 0, 0, 3));
                 }
@@ -555,7 +561,7 @@ public class Skills {
             for(Unit unit : Const.game.allUnits){
                 if(unit.team != hero.team && (unit instanceof Hero || unit instanceof Creature)){
                     double collisionT = Utilities.getCollisionTime(lineSpellUnit, unit, radius-Const.EPSILON);
-                    Const.game.events.add(new Event.LineEffectEvent(unit, collisionT < 0 ? duration : collisionT, lineSpellUnit, (int)(0.2*hero.mana), hero, radius, duration, 55));
+                    Const.game.events.add(new Event.LineEffectEvent(unit, collisionT < 0 ? duration : collisionT, lineSpellUnit, (int)(0.2*(hero.mana+manaCost)), hero, radius, duration, 55));
                 }
             }
         }

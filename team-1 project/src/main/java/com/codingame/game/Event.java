@@ -285,10 +285,8 @@ public abstract class Event {
         ArrayList<Unit> onEventTime(double currentTime) {
             unit.stunTime = Math.max(unit.stunTime, stunTime);
             Const.viewController.addEffect(unit, null, "stun", stunTime);
-            if(unit.moving) {
-                unit.vx = 0;
-                unit.vy = 0;
-            }
+            unit.vx = unit.forceVX;
+            unit.vy = unit.forceVY;
             return createListOfUnit();
         }
 

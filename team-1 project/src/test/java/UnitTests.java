@@ -173,7 +173,7 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        int dmg = hero.manaregeneration*3+30;
+        int dmg = hero.manaregeneration*5+30;
 
         return assertValue(500-dmg, unit4.health)
                 && assertValue(500-dmg, unit6.health)
@@ -273,7 +273,7 @@ public class UnitTests {
             return false;
         }
 
-        int fbDmg = (int)(55*((hero.distance(hero1)-50)/1000)+(int)(0.2*hero.mana));
+        int fbDmg = (int)(55*((hero.distance(hero1)-50)/1000)+(int)(0.2*(hero.mana+60)));
 
         return assertValue((int)(health1-fbDmg), hero1.health)
                 && assertValue((int)(health2-fbDmg), hero2.health);
@@ -600,19 +600,19 @@ public class UnitTests {
 
 
     public boolean knight_Cleric_spell1_doubleShiel_HULKBiggest_Test(){
-        Hero hero = createAndReplaceHero("HULK", 40, 40, 3000, 3000, 100);
+        Hero hero = createAndReplaceHero("HULK", 40, 40, 30000, 3000, 100);
         Hero hero0 = Factories.generateHero("DOCTOR_STRANGE", players.get(0), new Point(90,90));
         players.get(0).addHero(hero0);
         Const.game.allUnits.add(hero0);
 
         LaneUnit unit4 = new LaneUnit(50,50,500,1,200, new Point(40,40), players.get(1));
         unit4.range=200;
-        unit4.damage=55;
+        unit4.damage=100;
         Const.game.allUnits.add(unit4);
 
         LaneUnit unit5 = new LaneUnit(50,50,500,1,200, new Point(40,40), players.get(1));
         unit5.range=200;
-        unit5.damage=35;
+        unit5.damage=100;
         Const.game.allUnits.add(unit5);
 
         LaneUnit unit6 = new LaneUnit(500,500,500,1,200, new Point(40,40), players.get(1));
@@ -629,7 +629,7 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        int shieldedVal = (int)(hero.maxHealth*0.07+50+hero0.maxMana*0.3);
+        int shieldedVal = (int)(hero.maxHealth*0.07+50+hero0.maxMana*0.5+50);
 
         int dmg = unit4.damage+unit5.damage;
         boolean result =  assertValue((int)3000, hero.health)
@@ -689,7 +689,7 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        int shieldedVal = (int)(hero.maxHealth*0.07+50+hero0.maxMana*0.3);
+        int shieldedVal = (int)(hero.maxHealth*0.07+50+hero0.maxMana*0.5+50);
 
         int dmg = unit4.damage+unit5.damage;
         boolean result =  assertValue((int)100, hero.health)
@@ -753,8 +753,9 @@ public class UnitTests {
         hero0.team = 1;
         Const.game.allUnits.add(hero0);
         players.get(1).heroes.add(hero0);
+        int dmg = hero.damage;
 
-        LaneUnit unit4 = new LaneUnit(500,40,500,1,200, new Point(40,40), players.get(1));
+        LaneUnit unit4 = new LaneUnit(300,40,500,1,200, new Point(40,40), players.get(1));
         unit4.range=200;
         unit4.damage=3;
         Const.game.allUnits.add(unit4);
@@ -769,10 +770,11 @@ public class UnitTests {
             return false;
         }
 
-        return assertDouble(500, hero.x)
+        return assertDouble(300, hero.x)
                 && assertDouble(40, hero.y)
-                && assertValue(100-unit4.damage, hero.health) // this damage is dealt because the unit has not choosen a target before the teleport
-                && assertValue(500-hero.damage, unit4.health)
+                && assertValue(100, hero.health)
+                && assertDouble(500-hero.damage*0.5, unit4.health)
+                && assertValue(dmg, hero.damage)
                 && assertValue(50, unit4.moveSpeed);
     }
 
@@ -986,7 +988,7 @@ public class UnitTests {
 
     public boolean knight_jumpsKnight_spell0_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
-        Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(400, 45));
+        Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(300, 45));
         hero0.team=1;
         hero0.moveSpeed = 200;
         Const.game.allUnits.add(hero0);
@@ -1003,10 +1005,11 @@ public class UnitTests {
             return false;
         }
 
-        return assertDouble(400, hero.x)
+        return assertDouble(300, hero.x)
                 && assertDouble(45, hero.y)
                 && assertDouble(40, hero0.x)
                 && assertDouble(40, hero0.y)
+                && assertDouble(50, hero0.moveSpeed)
                 && assertDouble(50, hero0.moveSpeed)
                 && assertDouble(100, hero.health);
     }
@@ -1014,7 +1017,7 @@ public class UnitTests {
     public boolean knight_spell0_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
 
-        LaneUnit unit4 = new LaneUnit(500,40,500,1,200, new Point(40,40), players.get(1));
+        LaneUnit unit4 = new LaneUnit(300,40,500,1,200, new Point(40,40), players.get(1));
         unit4.range=200;
         unit4.damage=3;
         Const.game.allUnits.add(unit4);
@@ -1026,10 +1029,10 @@ public class UnitTests {
             return false;
         }
 
-        boolean result = assertDouble(500, hero.x)
+        boolean result = assertDouble(300, hero.x)
                 && assertDouble(40, hero.y)
-                && assertValue(100-unit4.damage, hero.health)
-                && assertValue(500-hero.damage, unit4.health)
+                && assertValue(100, hero.health)
+                && assertDouble(500-hero.damage*0.5, unit4.health)
                 && assertValue(50, unit4.moveSpeed);
 
         runRound(5);
@@ -1178,7 +1181,7 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        int shield = (int)(hero0.maxMana*0.3);
+        int shield = (int)(hero0.maxMana*0.5+50);
 
         return assertValue(100, hero0.health)
                 && assertValue(shield-unit3.damage, hero0.shield);
@@ -1188,7 +1191,7 @@ public class UnitTests {
         Hero hero0 = createAndReplaceHero("DOCTOR_STRANGE", 40, 40, 100, 200, 100);
 
         LaneUnit unit3 = new LaneUnit(55,56,10,1,100, new Point(60,60), players.get(0));
-        unit3.damage=150;
+        unit3.damage=220;
         unit3.range=100;
         Const.game.allUnits.add(unit3);
 
@@ -1198,7 +1201,7 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        int shield = (int)(hero0.maxMana*0.3);
+        int shield = (int)(hero0.maxMana*0.5+50);
 
         return assertValue(100-unit3.damage+shield, hero0.health)
                 && assertValue(0, hero0.shield);
@@ -1223,8 +1226,8 @@ public class UnitTests {
         }catch (Exception e){
             return false;
         }
-        return assertDouble((int)(100+hero0.mana*0.2), hero0.health)
-                && assertDouble((int)(50+hero0.mana*0.2), unit3.health)
+        return assertDouble((int)(100+(hero0.mana+50)*0.2), hero0.health)
+                && assertDouble((int)(50+(hero0.mana+50)*0.2), unit3.health)
                 && assertValue(50, unit4.health);
     }
 
@@ -1248,7 +1251,7 @@ public class UnitTests {
             return false;
         }
         return assertValue(142, hero0.health)
-                && assertDouble((int)(50+hero0.mana*0.2), unit3.health)
+                && assertDouble((int)(50+(hero0.mana+50)*0.2), unit3.health)
                 && assertValue(50, unit4.health);
     }
 

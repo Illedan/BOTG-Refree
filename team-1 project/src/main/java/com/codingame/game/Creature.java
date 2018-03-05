@@ -34,12 +34,6 @@ public class Creature extends Unit {
                 .findFirst()
                 .get();
         Point target = attacker;
-        double shortestDist = distance2(target);
-        double dist = distance2(attacker);
-        if (dist <= Const.UNITTARGETDISTANCE2 && dist < shortestDist) {
-            target = attacker;
-            shortestDist = dist;
-        }
         if (distance2(camp) < Const.AGGROUNITRANGE2) {
             this.attackUnitOrMoveTowards((Unit) target, 0.0);
         } else {

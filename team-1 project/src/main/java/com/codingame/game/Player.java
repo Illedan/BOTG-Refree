@@ -33,7 +33,10 @@ public class Player extends AbstractPlayer {
         int outputCounter = 0;
         for (int i = 0; i < internalHeroes.size(); i++) {
             Hero hero = internalHeroes.get(i);
-            if (hero.isDead || hero.stunTime > 0) continue;
+            if (hero.isDead || hero.stunTime > 0) {
+                outputCounter++;
+                continue;
+            }
 
             String roundOutput = outputs[outputCounter++];
             doHeroCommand(roundOutput, hero);
