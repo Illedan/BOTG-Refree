@@ -1,9 +1,32 @@
 TEAM-1 (Wildum, Illedan and AntiSquid)
 # Botters of the Galaxy
 
+Content:
+- Patch notes
+- Bugs
+- Unit stats
+- Skill stats
+- Item information
+- Game loop
+- Attacktime
+
+## Patch notes
+- VALKYRIE JUMP cast time increased to 0.15. 
+- Burning ground damage increased to 5*manaregn + 30
+- DR. Strange pull has ranged increased to 400
+- Dr. Strange shield is now 0.5*maxmana + 50 and has a manacost of 40
+- HULK CHARGE lowered range to 300 and reduced his damage when landing to 50%. Still -150 movespeed
+
 ## Bugs
 
+Next update: (fixed during tuesday)
+- VALK jumping closest to an invisible unit will try to attack the invisible unit(and be denied the action) while there was an availiable target.
+- Pull does not allways pull.
+
 Fixed:
+
+- Mana used in Burning ground and AOE heal now uses mana at time of usage.
+- Inputs with stunned allied
 - Attacking a unit when distance to the unit matches hero's range. (exact match at start of turn)
 	- This caused the hero to move towards the target.
 - Possible to deny your allied unit if it has 40% of your hero's maxhp. 
@@ -39,7 +62,7 @@ Fixed:
 |HERO|NAME|MANACOST|COOLDOWN|DURATION|CASTTIME|RANGE|TARGETTYPE|TARGETTEAM|
 |--|--|--|--|--|--|--|--|--|
 |VALKYRIE|SPEARFLIP|20|3|1|0.0|155|UNIT|BOTH|
-|VALKYRIE|JUMP|35|3|1|0.05|250|POSITION|ENEMY|
+|VALKYRIE|JUMP|35|3|1|0.15|250|POSITION|ENEMY|
 |VALKYRIE|POWERUP|50|7|4|0.0|0|SELF|NONE|
 |DEADPOOL|COUNTER|40|5|1|0.0|350|SELF|ENEMY|
 |DEADPOOL|WIRE|50|9|2|0.0|200|POSITION|ENEMY|
@@ -48,9 +71,9 @@ Fixed:
 |IRONMAN|FIREBALL|60|6|1|0.0|900|POSITION|ENEMY|
 |IRONMAN|BURNING|50|5|1|0.01|250|POSITION|ENEMY|
 |DOCTOR_STRANGE|AOEHEAL|50|6|1|0.01|250|POSITION|ALLIED|
-|DOCTOR_STRANGE|SHIELD|20|6|3|0.0|500|UNIT|ALLIED|
-|DOCTOR_STRANGE|PULL|40|5|1|0.1|300|UNIT|BOTH|
-|HULK|CHARGE|20|4|1|0.05|500|UNIT|ENEMY|
+|DOCTOR_STRANGE|SHIELD|40|6|3|0.0|500|UNIT|ALLIED|
+|DOCTOR_STRANGE|PULL|40|5|1|0.1|400|UNIT|BOTH|
+|HULK|CHARGE|20|4|1|0.05|300|UNIT|ENEMY|
 |HULK|EXPLOSIVESHIELD|30|8|4|0.0|100|SELF|ENEMY|
 |HULK|BASH|40|10|2|0.1|150|UNIT|ENEMY|
 
@@ -82,4 +105,74 @@ Formula used to calculate end price. This is done after the creation given a pri
 ```
 Math.max(Math.ceil(totalCost/2), Math.ceil(totalCost-(totalCost*totalCost/6000)))
 ```
+
+## Game loop
+
+```
+void play() {
+	SpawnLaneUnits();
+	SpawnGroots();
+
+	GetPlayerCommands();
+	CreateEventsFromPlayerCommands();
+	
+	FindActionForLaneUnits();
+	FindActionForTower();
+	FindActionForGroot();
+	
+	RecalculateEventsIncludingMovingUnits();
+
+	  double t = 0.0;
+
+	  while (t <= 1.0) {
+	  	CheckGameOver();
+		
+		FindNextEvent();
+		
+		MoveUnitsToEventTime();
+		
+		FindAllEventsAtSameTime();
+		
+		PlayEvents();
+		
+		HandleDamage();
+		
+		RecalculateEventsOfChangedUnits();
+  	}
+	
+	MoveUnitsToT1();
+	
+	RemoveEventsNotValid(); 
+	
+	UpdateAfterRoundOnUnits(); // stun, cooldown, mana, visibility timer, rounding x/y
+	
+	UpdateVisibility();
+}
+```
+
+
+## Attacktime
+
+This method returns at what time your attack will hit a target. If this method returns > 1.0, the gameengine would stop the attack from 
+
+
+```
+public double AttackTime(Unit unit)
+{
+	var dist = Distance(unit);
+	double t = 0;
+	if (dist > unit.attackRange)
+	{
+		t = (dist - attackRange) / movementSpeed;
+		dist = attackRange;
+	}
+
+	t += attackTime;
+	if (attackRange > 150)
+	{
+		t += attackTime * (dist / attackRange);
+	}
+
+	return t;
+}
 
