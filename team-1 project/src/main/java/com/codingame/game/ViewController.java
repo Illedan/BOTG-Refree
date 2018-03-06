@@ -209,7 +209,8 @@ public class ViewController {
         tooltipModule.registerEntity(entity, params);
 
         //TODO: this can be used to change the extra contents of the tooltip throughout the game.
-        tooltipModule.updateExtraTooltipText(entity, "health: " + unit.health);
+        tooltipModule.updateExtraTooltipText(entity, "health: " + unit.health +
+                                          "\nteam: " + unit.team);
     }
 
     public void setRotation(Unit unit, Point target, double t){
@@ -411,7 +412,8 @@ public class ViewController {
             for(int id : spriteMap.keySet()){
                 Tuple tuple = spriteMap.get(id);
                 if(tuple.unit instanceof Hero) continue;
-                updateEntityTooltip(tuple.sprite, "health: " + tuple.unit.health);
+                updateEntityTooltip(tuple.sprite, "health: " + tuple.unit.health +
+                                                  "\nteam: " + tuple.unit.team );
             }
         }
 
@@ -518,7 +520,8 @@ public class ViewController {
             prevDamage = setValues(prevDamage, hero.damage, damageCounter, null, 0);
 
             if(!hero.isDead)
-            tooltipModule.updateExtraTooltipText(hero.sprite, "health: " + hero.health);
+            tooltipModule.updateExtraTooltipText(hero.sprite, "health: " + hero.health +
+                                              "\nteam: " + hero.team);
         }
 
         private int setValues(int oldVal, int newVal, Text text, Sprite bar, int max){

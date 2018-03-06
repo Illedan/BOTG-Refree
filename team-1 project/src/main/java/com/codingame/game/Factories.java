@@ -79,7 +79,7 @@ public class Factories {
             hero.range = 130;
             hero.manaregeneration = 2;
             hero.skills[0] = new Skills.FlipSkill(hero, 20, "SPEARFLIP", 0.1, 155, 3);
-            hero.skills[1] = new Skills.JumpSkill(hero, 35, "JUMP", 0.05, 250, 3);
+            hero.skills[1] = new Skills.JumpSkill(hero, 35, "JUMP", 0.15, 250, 3);
             hero.skills[2] = new Skills.PowerUpSkill(hero, 50, "POWERUP", 4, 0, 7);
 
         } else if (type.equals(HeroType.DEADPOOL.name())) {
@@ -101,8 +101,8 @@ public class Factories {
             hero.range = 245;
             hero.manaregeneration = 2;
             hero.skills[0] = new Skills.AOEHealSkill(hero, 50, "AOEHEAL", 0.01, 250, 100, "HEALING-BALL.png", 6);
-            hero.skills[1] = new Skills.ShieldSkill(hero, 20, "SHIELD", 3, 500, 6);
-            hero.skills[2] = new Skills.PullSkill(hero, 40, "PULL", 0.3, 300, 5, 0.1);
+            hero.skills[1] = new Skills.ShieldSkill(hero, 40, "SHIELD", 3, 500, 6);
+            hero.skills[2] = new Skills.PullSkill(hero, 40, "PULL", 0.3, 400, 5, 0.1);
 
         } else if (type.equals(HeroType.HULK.name())) {
             hero.health =  hero.maxHealth = 1450;
@@ -111,7 +111,7 @@ public class Factories {
             hero.skin = Const.HULK;
             hero.range = 95;
             hero.manaregeneration = 1;
-            hero.skills[0] = new Skills.ChargeSkill(hero, 20, "CHARGE", 0.05, 500, 4);
+            hero.skills[0] = new Skills.ChargeSkill(hero, 20, "CHARGE", 0.05, 300, 4);
             hero.skills[1] = new Skills.ExplosiveSkill(hero, 30, "EXPLOSIVESHIELD", 4, 100, 8);
             hero.skills[2] = new Skills.BashSkill(hero, 40, "BASH", 2, 150, 10);
 

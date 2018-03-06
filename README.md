@@ -1,9 +1,32 @@
 TEAM-1 (Wildum, Illedan and AntiSquid)
 # Botters of the Galaxy
 
+Content:
+- Balance notes
+- Bugs
+- Unit stats
+- Skill stats
+- Item information
+- Game loop
+- Attacktime
+
+## Balance notes
+- VALKYRIE JUMP cast time increased to 0.15. 
+- Burning ground damage increased to 5*manaregn + 30
+- DR. Strange pull has ranged increased to 400
+- Dr. Strange shield is now 0.5*maxmana + 50 and has a manacost of 40
+- HULK CHARGE lowered range to 300 and reduced his damage when landing to 50%. Still -150 movespeed
+
 ## Bugs
 
+Next update: (fixed during tuesday)
+- VALK jumping closest to an invisible unit will try to attack the invisible unit(and be denied the action) while there was an availiable target.
+- Pull does not allways pull.
+
 Fixed:
+
+- Mana used in Burning ground and AOE heal now uses mana at time of usage.
+- Inputs with stunned allied
 - Attacking a unit when distance to the unit matches hero's range. (exact match at start of turn)
 	- This caused the hero to move towards the target.
 - Possible to deny your allied unit if it has 40% of your hero's maxhp. 
@@ -82,3 +105,74 @@ Formula used to calculate end price. This is done after the creation given a pri
 ```
 Math.max(Math.ceil(totalCost/2), Math.ceil(totalCost-(totalCost*totalCost/6000)))
 ```
+
+## Game loop
+
+```
+void play() {
+	SpawnLaneUnits();
+	SpawnGroots();
+
+	GetPlayerCommands();
+	CreateEventsFromPlayerCommands();
+	
+	FindActionForLaneUnits();
+	FindActionForTower();
+	FindActionForGroot();
+	
+	RecalculateEventsIncludingMovingUnits();
+
+	  double t = 0.0;
+
+	  while (t <= 1.0) {
+	  	CheckGameOver();
+		
+		FindNextEvent();
+		
+		MoveUnitsToEventTime();
+		
+		FindAllEventsAtSameTime();
+		
+		PlayEvents();
+		
+		HandleDamage();
+		
+		RecalculateEventsOfChangedUnits();
+  	}
+	
+	MoveUnitsToT1();
+	
+	RemoveEventsNotValid(); 
+	
+	UpdateAfterRoundOnUnits(); // stun, cooldown, mana, visibility timer, rounding x/y
+	
+	UpdateVisibility();
+}
+```
+
+
+## Attacktime
+
+This method returns at what time your attack will hit a target. If this method returns > 1.0, the gameengine would stop the attack from 
+
+
+```
+public double AttackTime(Unit unit)
+{
+	var dist = Distance(unit);
+	double t = 0;
+	if (dist > unit.attackRange)
+	{
+		t = (dist - attackRange) / movementSpeed;
+		dist = attackRange;
+	}
+
+	t += attackTime;
+	if (attackRange > 150)
+	{
+		t += attackTime * (dist / attackRange);
+	}
+
+	return t;
+}
+
