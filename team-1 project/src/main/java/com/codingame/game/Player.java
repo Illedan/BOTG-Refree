@@ -33,12 +33,11 @@ public class Player extends AbstractPlayer {
         int outputCounter = 0;
         for (int i = 0; i < internalHeroes.size(); i++) {
             Hero hero = internalHeroes.get(i);
-            if(hero.stunTime > 0){
-                outputCounter++;
+            if (hero.isDead) {
                 continue;
             }
-
-            if (hero.isDead) {
+            if(hero.stunTime > 0){
+                outputCounter++;
                 continue;
             }
 
