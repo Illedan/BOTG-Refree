@@ -2,7 +2,7 @@ TEAM-1 (Wildum, Illedan and AntiSquid)
 # Botters of the Galaxy
 
 Content:
-- Patch notes
+- Balance notes
 - Bugs
 - Unit stats
 - Skill stats
@@ -10,7 +10,7 @@ Content:
 - Game loop
 - Attacktime
 
-## Patch notes
+## Balance notes
 - VALKYRIE JUMP cast time increased to 0.15. 
 - Burning ground damage increased to 5*manaregn + 30
 - DR. Strange pull has ranged increased to 400
