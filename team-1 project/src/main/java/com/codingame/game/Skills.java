@@ -133,7 +133,7 @@ public class Skills {
         @Override
         void doSkill(Game game, double x, double y, int unitId) {
             Unit target = Const.game.getUnitOfId(unitId);
-            if(target.distance(hero) <= range){
+            if(target.distance(hero) <= range && !(target instanceof Tower)){
                 game.events.add(new Event.StunEvent(target, 0, 1));
                 if(target.team != hero.team)
                     game.events.add(new Event.DamageEvent(target, hero, duration, (int)(hero.damage*0.4)));
@@ -299,7 +299,7 @@ public class Skills {
         void doSkill(Game game, double x, double y, int unitId) {
             Unit unit = Const.game.getUnitOfId(unitId);
             double distance =unit.distance(hero);
-            if(distance <= range){
+            if(distance <= range && !(unit instanceof Tower)){
                 if(distance > Const.EPSILON){
                     double vx = (hero.x-unit.x)/distance*200/duration;
                     double vy = (hero.y-unit.y)/distance*200/duration;
@@ -378,7 +378,7 @@ public class Skills {
         @Override
         void doSkill(Game game, double x, double y, int unitId) {
             Unit target = Const.game.getUnitOfId(unitId);
-            if(target.distance(hero) <= range){
+            if(target.distance(hero) <= range && !(target instanceof Tower)){
                 game.events.add(new Event.DamageEvent(target, hero, hero.attackTime, hero.damage));
                 game.events.add(new Event.StunEvent(target, hero.attackTime, (int)duration));
             }else Const.viewController.addSummary("Can't bash unit outside range.");
