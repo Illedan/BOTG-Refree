@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -768,6 +769,29 @@ public class UnitTests {
                 && assertDouble(100, hero0.y);
     }
 
+    public boolean OneMovement_firstStunnedAndDead_Test(){
+        Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
+        Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(60, 60));
+        hero0.team = 0;
+        Const.game.allUnits.add(hero0);
+        players.get(0).heroes.add(hero0);
+        hero.stunTime = 3;
+        hero.isDead = true;
+        try
+        {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"MOVE 150 100"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(40, hero.x)
+                && assertDouble(40, hero.y)
+                && assertDouble(150, hero0.x)
+                && assertDouble(100, hero0.y);
+    }
+
     public boolean doubleMoveMent_firstStunned_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(60, 60));
@@ -1187,6 +1211,23 @@ public class UnitTests {
         return assertDouble(1100, players.get(1).heroes.get(0).x);
     }
 
+    public boolean cleric_pullTower_Test(){
+        createAndReplaceHero("DOCTOR_STRANGE", 400, 400, 100, 200, 100);
+        Tower tower = players.get(0).tower;
+        Const.game.allUnits.add(tower);
+        tower.x = 500;
+        tower.y = 500;
+
+        try
+        {
+            doHeroCommandAndRun(players.get(0), "PULL " + tower.id, 5);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertDouble(500, tower.x) && assertDouble(500, tower.y);
+    }
+
     public boolean cleric_spell2_DrainMana_Test(){
         createAndReplaceHero("DOCTOR_STRANGE", 400, 400, 100, 200, 100);
         Hero hero0 = players.get(0).heroes.get(0);
@@ -1210,6 +1251,43 @@ public class UnitTests {
                 && assertDouble(555-200, hero1.y)
                 && assertValue(100-hero1.manaregeneration*3+5-5, hero1.mana)
                 && assertValue(prevMana-hero0.skills[2].manaCost+hero0.manaregeneration+hero1.manaregeneration*3+5, hero0.mana);
+    }
+
+    public boolean cleric_spell2_verifyALLDirections_Test(){
+
+        for(double i = 0; i < 360; i+=0.1) {
+            double angle = Math.toRadians(i);
+            double xTarget = 720+Math.cos(angle)*1000;
+            double yTarget = 490+Math.sin(angle)*1000;
+            Point target = new Point(xTarget, yTarget);
+            Hero hero0 = createAndReplaceHero("DOCTOR_STRANGE", 1084, 490, 100, 200, 100);
+            LaneUnit unit3 = new LaneUnit(720, 490, 10, 1, 200, target, players.get(1));
+            unit3.range = 200;
+            unit3.damage = 99;
+            Const.game.allUnits.add(unit3);
+
+            double unitDist = target.distance(unit3);
+            double vx = (xTarget-unit3.x)/unitDist*20;
+            double vy = (yTarget-unit3.y)/unitDist*20;
+
+
+            double dist = hero0.distance(unit3);
+            int newX = Utilities.round((hero0.x - unit3.x) / dist * 200 + unit3.x +vx);
+            int newY = Utilities.round((hero0.y - unit3.y) / dist * 200 + unit3.y +vy);
+
+            try {
+                doHeroCommandAndRun(players.get(0), "PULL " + unit3.id, 5);
+            } catch (Exception e) {
+                return false;
+            }
+            Const.game.allUnits.remove(unit3);
+
+            if(assertDouble(newX, unit3.x)
+                    && assertDouble(newY, unit3.y)) continue;
+            else return false;
+        }
+
+        return true;
     }
 
     public boolean cleric_spell2_Test(){
@@ -1409,6 +1487,54 @@ public class UnitTests {
         runRound(5);
 
         return result && assertValue(true, hero0.visible) && assertValue(heroHealth-unit2.damage*2, hero0.health);
+    }
+
+
+    public boolean ninja_spell1_TeleportIntoWire_Test(){
+        Hero hero0 = createAndReplaceHero("DEADPOOL", 200, 200, 100, 142, 100);
+
+        Hero hero1 = players.get(1).heroes.get(0);
+        Const.game.allUnits.add(hero1);
+        hero1.x = 400;
+        hero1.y = 400;
+        int heroHealth = hero1.health;
+
+        try {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"WIRE " + 400 + " " + 200});
+            players.get(1).handlePlayerOutputs(new String[]{"BLINK 400 200"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            System.err.println(e.getStackTrace());
+            return false;
+        }
+
+        return assertValue(1, hero1.stunTime) && assertDouble(heroHealth-hero1.maxMana*0.5, hero1.health)
+                && assertDouble(400, hero1.x) && assertDouble(200, hero1.y);
+    }
+
+
+    public boolean ninja_spell1_InstantStop_Test(){
+        Hero hero0 = createAndReplaceHero("DEADPOOL", 195, 195, 100, 142, 100);
+
+        Hero hero1 = players.get(1).heroes.get(0);
+        Const.game.allUnits.add(hero1);
+        hero1.x = 200;
+        hero1.y = 200;
+        int heroHealth = hero1.health;
+
+        try {
+            Const.game.beforeTurn(5, players);
+            players.get(0).handlePlayerOutputs(new String[]{"WIRE " + (int)hero1.x + " " + (int)hero1.y});
+            players.get(1).handlePlayerOutputs(new String[]{"MOVE 300 200"});
+            Const.game.handleTurn(players);
+        }catch (Exception e){
+            System.err.println(e.getStackTrace());
+            return false;
+        }
+
+        return assertValue(1, hero1.stunTime) && assertDouble(heroHealth-hero1.maxMana*0.5, hero1.health)
+                && assertDouble(200, hero1.x) && assertDouble(200, hero1.y);
     }
 
     public boolean ninja_spell1_Test(){
