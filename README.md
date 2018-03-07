@@ -1,6 +1,8 @@
 TEAM-1 (Wildum, Illedan and AntiSquid)
 # Botters of the Galaxy
 
+There will be no other bugfixes, unless they are critical.
+
 Content:
 - Balance notes
 - Bugs
@@ -19,12 +21,12 @@ Content:
 
 ## Bugs
 
-Next update: (fixed during tuesday)
+Known bugs:
 - VALK jumping closest to an invisible unit will try to attack the invisible unit(and be denied the action) while there was an availiable target.
 - Pull does not allways pull.
 
 Fixed:
-
+- Can move / bash tower
 - Mana used in Burning ground and AOE heal now uses mana at time of usage.
 - Inputs with stunned allied
 - Attacking a unit when distance to the unit matches hero's range. (exact match at start of turn)
