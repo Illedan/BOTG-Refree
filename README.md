@@ -23,9 +23,10 @@ Content:
 
 Known bugs:
 - VALK jumping closest to an invisible unit will try to attack the invisible unit(and be denied the action) while there was an availiable target.
-- Pull does not allways pull.
+- Pull does not allways pull. 
 
 Fixed:
+- Wire does now stuns correctly.
 - Can move / bash tower
 - Mana used in Burning ground and AOE heal now uses mana at time of usage.
 - Inputs with stunned allied
