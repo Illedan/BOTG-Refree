@@ -26,7 +26,7 @@ Known bugs:
 - Pull does not allways pull. 
 
 Fixed:
-- Wire does now stuns correctly.
+- Wire does now stuns correctly. (is updated during thursday)
 - Can move / bash tower
 - Mana used in Burning ground and AOE heal now uses mana at time of usage.
 - Inputs with stunned allied
