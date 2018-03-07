@@ -187,7 +187,7 @@ public abstract class Unit extends MovingEntity {
 
             //Closest on other team, if equal take lowest health and if equal highest y (to make equal matches)
             if((unit.team == 1-team || filter.equals("GROOT") )&& allowedToAttack(unit) &&
-                    (closest==null || minDist > dist || (minDist==dist && (closest.health > unit.health || unit.y > closest.y)))){
+                    (closest==null || minDist > dist || (minDist==dist && (closest.health > unit.health ||  unit.y > closest.y)))){
                 minDist = dist;
                 closest = unit;
             }

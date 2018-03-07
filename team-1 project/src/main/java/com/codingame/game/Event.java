@@ -666,7 +666,7 @@ public abstract class Event {
                 }
 
                 if(closest!= null) {
-                    closest.stunTime = Math.max(closest.stunTime, 2);
+                    Const.game.events.add(new StunEvent(closest, 0, 2));
                     doDamage(closest, (int)(closest.maxMana*dmgMultiplier), attacker);
                     return createListOfUnit();
                 }
@@ -677,6 +677,9 @@ public abstract class Event {
 
         @Override
         boolean afterAnotherEvent(Unit affectedUnit, int outcome, double currentTime) {
+          if (affectedUnit == null) {
+              return false;
+          }
           if(affectedUnit.team != attacker.team && (affectedUnit instanceof Hero || affectedUnit instanceof Creature) && hasAnyOutcome(outcome, SPEEDCHANGED, TELEPORTED)){
               movingSpell.moveIgnoreEdges(currentTime);
 

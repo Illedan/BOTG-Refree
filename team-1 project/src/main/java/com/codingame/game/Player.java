@@ -36,6 +36,7 @@ public class Player extends AbstractPlayer {
             if (hero.isDead) {
                 continue;
             }
+
             if(hero.stunTime > 0){
                 outputCounter++;
                 continue;
@@ -164,6 +165,8 @@ public class Player extends AbstractPlayer {
                             }
                             else if(outputValues.length==1 && skill.getTargetType() == SkillType.SELF){ }
                             else {
+                                printError(hero.heroType + " invalid number of parameters on spell. " + roundOutputSplitted[0]);
+                                return;
                             }
 
                             hero.mana-= skill.manaCost;

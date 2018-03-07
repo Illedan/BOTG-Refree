@@ -68,7 +68,7 @@ public class Game {
 
             ArrayList<Event> occuringEvents = new ArrayList<>();
             occuringEvents.add(nextEvent);
-            for(int i =events.size() - 1; i >= 0; i--) {
+            for(int i = events.size() - 1; i >= 0; i--) {
                 Event event = events.get(i);
                 if(event.t < Const.EPSILON && event.t+t <= Const.ROUNDTIME){
                     occuringEvents.add(event);
@@ -161,7 +161,8 @@ public class Game {
             target.health = Math.min(target.health - totalDamage, target.maxHealth);
             // updates health of the unit in viewer
             if(target instanceof Hero) {
-                Const.viewController.updateEntityTooltip(target.sprite, "health: " + target.health);
+                Const.viewController.updateEntityTooltip(target.sprite, "health: " + target.health+
+                                                  "\nteam: " + target.team);
             }
             if(anyHero){
                 Const.viewController.displayDamages(target, totalDamage, t);
@@ -169,7 +170,7 @@ public class Game {
 
             if(target.health <= 0) {
                 target.isDead = true;
-                Const.viewController.updateEntityTooltip(target.sprite);
+                Const.viewController.updateEntityTooltip(target.sprite, "0");
 
                 UnitKilledState state = highestDamageUnit instanceof Hero ? UnitKilledState.farmed : UnitKilledState.normal;
 
