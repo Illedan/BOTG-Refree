@@ -156,7 +156,7 @@ void play() {
 
 ## Attacktime
 
-This method returns at what time your attack will hit a target. If this method returns > 1.0, the gameengine would stop the attack from 
+This method returns at what time your attack will hit a target, while assuming the target doesn't move.
 
 
 ```
@@ -164,7 +164,7 @@ public double AttackTime(Unit unit)
 {
 	var dist = Distance(unit);
 	double t = 0;
-	if (dist > unit.attackRange)
+	if (dist > attackRange)
 	{
 		t = (dist - attackRange) / movementSpeed;
 		dist = attackRange;
