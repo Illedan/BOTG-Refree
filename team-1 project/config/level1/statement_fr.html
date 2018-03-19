@@ -1,0 +1,473 @@
+<div id="statement_back" class="statement_back" style="display:none">
+
+    </div>
+    
+    <div class="statement-body">
+    
+            <!-- LEAGUE ALERT -->
+            <div style="color: #7cc576;
+            background-color: rgba(124, 197, 118,.1);
+            padding: 20px;
+            margin-right: 15px;
+            margin-left: 15px;
+            margin-bottom: 10px;
+            text-align: left;">
+                <div style="text-align: center; margin-bottom: 6px">
+                    <img src="//cdn.codingame.com/smash-the-code/statement/league_wood_04.png" />
+                </div>
+    
+                <!-- BEGIN wood3 -->
+                <p style="text-align: center; font-weight: 700; margin-bottom: 6px;">
+                    Ce puzzle se déroule en <b>ligues</b>.
+                </p>
+                <span class="statement-league-alert-content">
+                    Pour ce puzzle, plusieurs versions du même jeu seront disponibles. Quand vous aurez prouvé votre valeur dans la première version, vous accéderez à la ligue supérieure et débloquerez de nouvelles règles.
+              </span>
+                <!-- END -->
+    
+    
+            </div>
+    
+    
+            <!-- GOAL -->
+            <div class="statement-section statement-goal">
+                <h1>
+                    <span class="icon icon-goal">&nbsp;</span>
+                    <span>Objectif</span>
+                </h1>
+                <div class="statement-goal-content">
+                    <!-- LEAGUES wood3 wood2 wood1 bronze -->
+                    Détruire la tourelle de votre adversaire.
+                </div>
+            </div>
+    
+    
+            <!-- RULES -->
+            <div class="statement-section statement-rules">
+                <h1>
+                    <span class="icon icon-rules">&nbsp;</span>
+                    <span>Règles</span>
+                </h1>
+                <div><div class="statement-rules-content">
+    
+                    <p>Le jeu se déroule sur une carte de <const>1920</const> unités de large et <const>750</const> unités de haut avec deux joueurs.<br>
+                        Les coordonnées <const>X=0</const>,<const> Y=0</const> correspondent au pixel situé en haut à gauche.</p>
+    
+                    <!-- BEGIN wood3 wood2 -->
+                    <p>Les joueurs contrôlent chacun un hérosqu'ils choisissent avant que la partie ne commence. Pour choisir un héro, il suffit d'afficher en sortie son nom.</p>
+                    <!-- END -->
+    
+    
+                    <p>Les équipes commencent sur les côtés opposés de la route qui traverse la carte.</p>
+    
+                    <p>Une tourelle est placée à côté des points d'apparition de chaque équipe. Chaque joueur doit protéger sa tourelle tout en essayant de détruire celle de son adversaire.</p>
+    
+                    <p>Tous les <const>15</const> tours une vague d'unités alliées apparaît pour chaque joueur, à côté de leurs tourelles respectives, pour les aider à combattre. Ces unités se dirigent vers la tourelle adverse mais s'arrêteront pour attaquer les ennemis qu'elles croisent.</p>    
+    
+    
+    
+                    <br>
+    
+                    <p><strong>Les héros</strong><br>
+                        <br>
+                        Vous pouvez choisir parmi les héros suivants:<br>
+                        <action>DEADPOOL</action> <br>
+                        <action>DOCTOR_STRANGE</action><br>
+                        <action>HULK</action><br>
+                        <action>IRONMAN</action> <br>
+                        <action>VALKYRIE</action><br></p>
+    
+                    <br>
+    
+    
+    
+    
+                    <p><strong>Actions</strong><br>
+                        <br>
+                        Chaque tour votre héros doit effectuer l'une des actions suivantes:
+                    </p><ul>
+                    <li>  <action>WAIT</action></li>
+                    <li> <action>MOVE  x y</action> se déplace vers <const>(x, y)</const> </li>
+                    <li> <action>ATTACK</action> <var>unitId</var> tente d'attaquer <const>unitId</const></li>
+                    <li> <action>ATTACK_NEAREST</action> <var>unitType</var> attaque l'entité la plus proche du type donné</li>
+                    <li>  <action>MOVE_ATTACK x y</action> <var>unitId</var> se déplace vers <const>(x, y)</const> et attaque <const>unitId</const></li>
+                    </ul></p>
+                </div>
+    
+    
+                    <!-- Victory conditions -->
+                    <div class="statement-victory-conditions">
+                        <div class="icon victory"></div>
+                        <div class="blk">
+                            <div class="title">Conditions de victoire</div>
+                            <div class="text">
+                                <ul>
+                                    <li>Détruire la tourelle adverse</li>
+                                    <!-- BEGIN wood3 wood2 -->
+                                    <li>Tuer le héros ennemi</li>
+                                    <li>Tuer plus d'unités que votre adversaire</li>
+                                    <!-- END -->
+    
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+    
+                    <!-- Lose conditions -->
+                    <div class="statement-lose-conditions">
+                        <div class="icon lose"></div>
+                        <div class="blk">
+                            <div class="title">Conditions de défaite</div>
+                            <div class="text">
+                                <ul>
+                                    <li>Vous effectuez une action invalide ou vous ne répondez pas dans les temps</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <!-- EXPERT RULES -->
+            <div class="statement-section statement-expertrules">
+                <h1>
+                    <span class="icon icon-expertrules">&nbsp;</span>
+                    <span>Règles pour les experts</span>
+                </h1>
+                <div class="statement-expert-rules-content">
+                    <br>
+    
+                    <p><strong>Collisions</strong><br>
+                        <br>
+    
+                        Il n'y a pas de collisions entre les entités.</p><br>
+    
+                    <p><strong>Types de tours</strong><br>
+                        <br>
+                        Il y a deux différents types de tours dans ce jeu.
+    <br><br>
+                        Le premier type est pour la sélection des héros et a lieu au début de la partie. Quand la variable <var>roundType</var> est négative, vous devez donner en sortie le nom du héros que vous voulez jouer. Si à la place vous donnez <action> WAIT </action> en sortie, un héros sera sélectionné à votre place.
+    <br>
+                        <br> Le second type est un tour de jeu normal où vous devez vous battre pour remporter la partie. <var>roundType</var> sera positive et sa valeur représentera le nombre de héros que vous contrôlez.</p><br>
+    
+                    <p><strong>Entités du jeu: Unités / Héros / Tourelles / Créatures neutres </strong><br>
+                        <br>
+    
+                        Chaque entité a les attributs suivants:<br>
+                    <li><var>unitId</var></li>
+                    <li><var>team</var> - l'équipe à laquelle elle appartient</li>
+                    <li><var>type</var> - le type de l'entité : unité / un héros / une tourelle / une créature neutre (Groot)</li>
+                    <li><var>attackRange</var> - la distance depuis laquelle une unité peut attaquer</li>
+                    <li><var>health</var> - la quantité de dégâts qu'une unité peut subir avant de mourir</li>
+                    <li><var>mana</var> - la quantité de mana qu'une unité a à sa disposition pour pouvoir effectuer ses sorts</li>
+                    <li><var>attack_damage</var> - la quantité de dégâts qu'une unité peut effectuer avec une commande <action>ATTACK</action></li>
+                    <li><var>movement_speed</var> - la distance qu'une unité peut parcourir en un tour. Une entité s'arrête lorsqu'elle arrive et n'ira pas plus loin avant le prochain tour.</li>
+    <br>
+    Les entités ont aussi <var>maxHealth</var> et <var>maxMana</var>. Ces variables représentent les valeurs maximales que peuvent prendre les variables <var>health</var> et <var>mana</var>.
+    <br><br>
+    Les tourelles sont stationnaires. Elles ne se déplacent pas.
+                    </p><br>
+    
+                    <p><strong>Locations des points d'apparition</strong><br>
+                        <br>
+    
+                        <!-- BEGIN wood3 wood2 -->
+                        Le héros pour le joueur 0 apparaît à:<br>
+                        x: <const>200</const>, y: <const>590</const><br>
+                        Le héros pour le joueur 1 apparaît à:<br>
+                        x: <const>1720</const>, y: <const>590</const><br>
+                    </p><br>
+                    <!-- END -->
+    
+                    <p><strong>Caractéristiques des héros</strong><br>
+                        <br>
+    
+                        <!-- BEGIN wood3 wood2 wood1 -->
+                    <table style="width:100%; border: 1px solid white;">
+                        <tr>
+                            <th>Noms</th>
+                            <th>Caractéristiques</th>
+                        </tr>
+                        <tr>
+                            <td>Deadpool</td>
+                            <td><ul><li>health 1380</li>
+                                <li>mana 100</li>
+                                <li>damage 80</li>
+                                <li>move speed 200</li>
+                                <li>mana regen 1</li>
+                                <li>attackRange 110</li>
+                            </ul></td>
+                        </tr>
+                        <tr>
+                            <td>Doctor Strange</td>
+                            <td><ul><li>health 955</li>
+                                <li>mana 300</li>
+                                <li>damage 50</li>
+                                <li>move speed 200</li>
+                                <li>mana regen 2</li>
+                                <li>attackRange 245</li>
+                            </ul></td>
+                        </tr>
+                        <tr>
+                            <td>Hulk</td>
+                            <td><ul><li>health 1450</li>
+                                <li>mana 90</li>
+                                <li>damage 80</li>
+                                <li>move speed 200</li>
+                                <li>mana regen 1</li>
+                                <li>attackRange 95</li>
+                            </ul></td>
+                        </tr>
+                        <tr>
+                            <td>Ironman</td>
+                            <td><ul><li>health 820</li>
+                                <li>mana 200</li>
+                                <li>damage 60</li>
+                                <li>move speed 200</li>
+                                <li>mana regen 2</li>
+                                <li>attackRange 270</li>
+                            </ul></td>
+                        </tr>
+                        <tr>
+                            <td>Valkyrie</td>
+                            <td><ul><li>health 1400</li>
+                                <li>mana 155</li>
+                                <li>damage 65</li>
+                                <li>move speed 200</li>
+                                <li>mana regen 2</li>
+                                <li>attackRange 130</li>
+                            </ul></td>
+                        </tr>
+                    </table>
+                    <!-- END -->
+                   </p><br>
+    
+                    <p><strong>Attaques</strong><br>
+    
+                        <br>
+    
+    Les héros ont un temps d'attaque de 0.1 et les unités un temps d'attaque de 0.2.<br><br>
+    
+    Les projectiles des unités à distance ont un temps d'attaque additionnel égal à temps d'attaque * distance / <var>attackRange</var> pour atteindre leur cible.<br><br>
+    
+    Une unité ou un héros est considéré comme "distance" si sa portée (<var>attackRange</var>) est supérieure à 150. <br><br>
+    
+    Si une unité est hors de portée, votre héros va d'abord se déplacer vers elle et ensuite essayer de l'attaquer. C'est très pratique si vous êtes presque à portée.<br><br>
+    
+    Le temps utilisé pour se déplacer est distance / <var>moveSpeed</var> <br><br>
+    
+    Si votre héros a <const>75</const> de portée et se déplace à une distance de <const>100</const> sur la carte, à <const>200</const> de <var>moveSpeed</var>, il utilise alors <const>100</const> / <const>200</const> = <const>0.5</const> temps et il lui restera alors la moitié du tour pour attaquer. L'attaque aura lieu à <const>0.5</const> + <const>0.1</const> vu que le héros est "mélée" dans cet exemple.<br><br>
+    La distance entre le héros et l'unité doit être égale ou inférieure à la portée du héros pour que l'attaque soit effectuée.<br><br>
+    Les attaques avec un temps d'attaque supérieur à 1 n'ont pas lieu.<br><br>
+    
+    <action>ATTACK_NEAREST</action> <var>unitType</var> : identique à la commande ATTACK cependant la cible choisie est l'entité du type donné la plus proche.<br>
+    <action>MOVE_ATTACK x y </action>  <var>unitId</var> : votre héros se déplace d'abord vers le point donné et exécute ensuite l'attaque, s'il a assez de temps et s'il est à moins de <var>attackRange</var> de la cible.
+    
+                    </p><br>
+    
+    
+    
+                    <p><strong>Comportement des unités</strong><br>
+                        <br>
+                        Si votre héros attaque un héros ennemi pendant que ses unités alliées sont autour de lui, elles vont vous suivre et vous attaquer. Cela s'appelle "l'aggro". L'agresseur doit être à une distance de moins de 300 pour que les unités ennemies l'aggro. L'aggro est annulée si le héros s'éloigne d'elles de plus de 300. L'aggro des unités dure 3 tours en incluant le tour initial.<br><br>
+    
+    Les unités vont toujours essayer d'attaquer le héros qui les a aggro.<br><br>
+    
+    Si elles ne sont pas aggro, les unités se déplacent directement vers la tourelle ennemie depuis leur position actuelle. <br>
+    Sur leurs chemins, elles s'arrêtent toujours pour attaquer l'entité ennemie la plus proche si elle se trouve à une distance inférieure à <var>attackRange</var>.<br>
+    - Si plusieurs cibles sont à une même distance, l'ennemi avec le moins de <var>health</var> est sélectionné.<br>
+    - Ensuite, c'est l'ennemi avec la coordonnée <var>y</var> la plus grande qui est sélectionné.<br>
+    - Enfin, c'est l'ennemi avec la <var>unitId</var> la plus petite qui est sélectionné.</p><br>
+    
+    
+                    <p><strong>Comportement des tourelles</strong><br>
+                        <br>
+    L'ordre d'attaque des tourelles est le suivant:
+    <br><br>
+    Cible d'abord un héros ennemi qui attaque un héros allié.<br>
+    Cible ensuite l'unité ennemie à portée la plus proche.<br>
+    Cible ensuite le héros ennemi le plus proche.<br>
+    <br><br>
+    Utiliser des sorts ou attaquer la tourelle ne force pas l'aggression de la tourelle.
+                        </p><br>
+    
+    
+                        <p><strong>Récompenses en pièces d'or</strong><br>
+                        <br>
+    
+    <table style="width:100%; border: 1px solid white; ">
+    <th>
+    Type de l'entité
+    </th>
+    <th>
+    Récompenses en pièces d'or
+    </th>
+    <tr>
+    <td>
+    Unités mélées
+    </td>
+    <td>
+    30
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Unités distances
+    </td>
+    <td>
+    50
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Héro
+    </td>
+    <td>
+    300
+    </td>
+    </tr>
+    </table>
+    
+                        </p><br>
+    
+                    <p><strong>Informations générales</strong><br>
+                        <br>
+                        
+                        Le jeu semble complexe mais il est en fait très simple et amusant.</p><br>
+    
+    
+                </div>
+            </div>
+    
+            Pour plus de détails rendez-vous sur <a href="https://github.com/Illedan/BOTG-Refree">GitHub</a>
+    
+            <!-- PROTOCOL -->
+            <div class="statement-section statement-protocol">
+                <h1>
+                    <span class="icon icon-protocol">&nbsp;</span>
+                    <span>Entrées du jeu</span>
+                </h1>
+                <!-- Protocol block -->
+                <div class="blk">
+                    <div class="title">Entrées d'initialisation</div>
+                    <div class="text"><span class="statement-lineno">Ligne 1:</span> votre numéro de <var>team</var>, peut être 0 ou 1.<br>
+                        <span class="statement-lineno">Ligne 2:</span><var>bushAndSpawnPointCount</var> le nombre de buissons et de points d'apparition<br><br>
+    
+                        <span class="statement-lineno">Les <var>bushAndSpawnPointCount</var> lignes suivantes:</span> String entityType [Bush, Spawn], Integer <var>x</var>, Integer <var>y</var>, Integer <var>radius</var><br><br>
+    
+                        <span class="statement-lineno">Ligne suivante:</span> <var>itemCount</var> le nombre total d'objets disponibles dans la partie.<br>
+                        <span class="statement-lineno">Les <var>itemCount</var> lignes suivantes:</span>
+                        <ul>
+                            <li>String <var>itemName</var></li>
+                            <li>Integer <var>itemCost</var></li>
+                            <li>Integer <var>damage</var></li>
+                            <li> Integer <var>health</var></li>
+                            <li>Integer <var>maxHealth</var></li>
+                            <li>Integer <var>mana</var></li>
+                            <li> Integer <var>maxMana</var></li>
+                            <li>Integer <var>moveSpeed</var></li>
+                            <li>Integer <var>manaRegeneration</var></li>
+                            <li> Integer <var>isPotion</var> [c'est une potion si la variable est égale à 1]</li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <!-- Protocol block -->
+                <div class="blk">
+                    <div class="title">Entrées pour un tour de jeu</div>
+                    <div class="text">
+                        <span class="statement-lineno">Ligne 1:</span> votre total de pièces d'or (<var>gold</var>) as Integer<br>
+                        <span class="statement-lineno">Ligne 2:</span> le nombre total de pièces d'or de votre opposant (<var> gold</var>) as Integer<br>
+                        <span class="statement-lineno">Ligne 3:</span> <var>roundType</var> un entier qui vous informe si vous êtes à la phase de sélection du héros ou à la phase de jeu.<br>
+                        <span class="statement-lineno">Ligne 4:</span> <var>entityCount</var> un nombre qui représente la somme de tous les héros, unités, tourelles et créatures neutres actuellement en jeu.<br>
+                        <br>
+    
+                        <span class="statement-lineno">Les <var>entityCount</var> entrées suivantes:</span>
+                        <ul>
+                            <li>Integer <var>unitId</var></li>
+                            <li>Integer <var>team</var></li>
+                            <li>String <var>unitType</var></li>
+                            <li> Integer <var>x</var></li>
+                            <li>Integer <var>y</var></li>
+                            <li>Integer <var>attackRange</var></li>
+                            <li> Integer <var>health</var></li>
+                            <li>Integer <var>max_health</var></li>
+                            <li>Integer <var>shield</var></li>
+                            <li>Integer <var>attack_damage</var></li>
+                            <li> Integer <var>movement_speed</var></li>
+                            <li>Integer <var>stun_duration</var></li>
+                            <li> Integer <var>gold_value</var></li>
+                        </ul>
+                        <br><br>Si <var>unitType</var> est un <action>HERO</action> il aura aussi:<br>
+                        <ul>
+                            <li> Integers <var>countDown1</var>, <var>countDown2</var> et <var>countDown3</var> représentants les nombres des tours à attendre avant que ces sorts soient de nouveau disponibles à l'utilisation.</li>
+                            <li>Integer <var>mana</var></li>
+                            <li>Integer <var>maxMana</var></li>
+                            <li> Integer <var>manaRegeneration</var></li>
+                            <li>String <var>heroType</var></li>
+                            <li>Integer <var>isVisible</var> [1 si l'entité est visible]</li>
+                            <li> Integer <var>itemsOwned</var></li>
+                        </ul>
+                    </div>
+                </div>
+    
+                <!-- Protocol block -->
+                <div class="blk">
+                    <div class="title">Sorties pour un tour de jeu</div>
+                    <div class="text">En fonction de la valeur de <var>roundType</var> votre sortie doit être soit le nom d'un héros soit une commande de héro.
+                        <br><br>
+                        Si <var>roundType</var> est négative, vous devez choisir un héro:
+                        </br><br>
+                        <strong>Une ligne de sortie:</strong> <var>heroName</var> doit être un des héros disponibles : <action>DEADPOOL</action>, <action>DOCTOR_STRANGE</action>, <action>HULK</action>, <action>IRONMAN</action>, <action>VALKYRIE</action>
+                        <br></br>
+                        Si <var>roundType</var> est positive, cela veut dire que vous avez <var>roundType</var> héros et que vous devez afficher en sortie:
+                        <br></br>
+                        <strong>Une ligne pour chaque héros vivant que vous possédez, contenant une des actions suivantes:</strong>
+                        </br>
+                        <ul>
+                            <li><action>WAIT</action></li>
+                            <li><action>MOVE x y</action></li>
+                            <li><action>ATTACK unitId</action></li>
+                            <li><action>ATTACK_NEAREST unitType</action> [UNIT, HERO, TOWER, GROOT]</li>
+                            <li><action>MOVE_ATTACK x y unitId</action></li>
+                            <li><action>BUY itemName</action></li>
+                            <li><action>SELL itemName</action></li>
+                        </ul>
+                        Pour afficher un message personnalisé dans le jeu: <action>[votre commande];[votre message personnalisé]</action> (ex: <action>MOVE 1 2;BotG est sympa!</action>)
+                    </div>
+                </div>
+    
+                <!-- Protocol block -->
+                <div class="blk">
+                    <div class="title">Contraintes</div>
+                    <div class="text">
+                        Temps de réponse pour le premier tour ≤ 1000ms <br>
+                        Temps de réponse pour un tour ≤ 50ms</div>
+                </div>
+            </div>
+    
+            <!-- BEGIN wood3 -->
+            <!-- NEXT LEAGUE RULES -->
+            <div style="color: #7cc576;
+          background-color: rgba(124, 197, 118,.1);
+          padding: 20px;
+          margin-top: 10px;
+          text-align: left;">
+                <div style="text-align: center; margin-bottom: 6px">
+                    <img src="//cdn.codingame.com/smash-the-code/statement/league_wood_04.png" />
+                </div>
+                <p style="text-align: center; font-weight: 700; margin-bottom: 6px;">
+    
+                    Quoi de neuf dans les prochaines ligues?
+                </p>
+                Les prochaines nouvelles règles des ligues au dessus sont:
+                <ul class="statement-next-rules">
+                    <li>Possibilité d'acheter des objets ainsi que la mécanique de last hit/deny</li>
+                    <li>Présence de créatures neutres (brrrrrrrrr), de buissons et d'un 2ème héro</li>
+                    <li>Compétences des héros.</li>
+                </ul>
+            </div>
+            <!-- END -->
+    </div>
+    

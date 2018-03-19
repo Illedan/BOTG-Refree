@@ -55,22 +55,23 @@ public class Game {
             }
 
             events.remove(nextEvent);
+            double eventTime = nextEvent.t+Const.EPSILON;
 
             for (Unit unit : allUnits) {
-                unit.move(nextEvent.t);
+                unit.move(eventTime);
             }
 
             for(Event event : events){
-                event.t-= nextEvent.t;
+                event.t-= eventTime;
             }
 
-            t += nextEvent.t;
+            t += eventTime;
 
             ArrayList<Event> occuringEvents = new ArrayList<>();
             occuringEvents.add(nextEvent);
-            for(int i = events.size() - 1; i >= 0; i--) {
+            for(int i =events.size() - 1; i >= 0; i--) {
                 Event event = events.get(i);
-                if(event.t < Const.EPSILON && event.t+t <= Const.ROUNDTIME){
+                if(event.t < 0 && event.t+t <= 1.0){
                     occuringEvents.add(event);
                     events.remove(i);
                 }
@@ -262,7 +263,6 @@ public class Game {
             teams.clear();
             if(visibleHeroes.size() == 0) break;
             for (Hero hero : visibleHeroes) {
-                if(hero.visibilityTimer > 0) continue;
                 if( hero.distance(bush) <= bush.radius ) {
                     hideout.add(hero);
                     if (!teams.contains(hero.team)) teams.add(hero.team);
@@ -270,6 +270,7 @@ public class Game {
             }
             if (teams.size() == 1) {
                 for (Hero hero : hideout) {
+                    if(hero.visibilityTimer > 0) continue;
                     hero.visible = false;
                     visibleHeroes.remove(hero);
                 }

@@ -1,0 +1,783 @@
+<div id="statement_back" class="statement_back" style="display:none">
+    </div>
+
+
+
+            <div class="statement-body">
+
+            <!--BALANCE UPDATE-->
+<div style="color: #76b2c6;
+background-color: rgba(118, 178, 198,.1);
+padding: 20px;
+margin-right: 15px;
+margin-left: 15px;
+margin-bottom: 10px;
+text-align: left;">
+    <div style="text-align: center; margin-bottom: 6px">
+        <img src="//cdn.codingame.com/smash-the-code/statement/league_wood_04.png" />
+    </div>
+
+    <!-- BEGIN bronze -->
+    <p style="text-align: center; font-weight: 700; margin-bottom: 6px;">
+        Liste des changements
+    </p>
+    <span class="statement-league-alert-content">
+<p style="font-weight: 700; margin-bottom: 6px;">Nerfs:</p><br>
+
+<p style="font-weight: 700; margin-bottom: 6px;">HULK:</p>
+
+<action>CHARGE</action><br>
+- la portée passe de <const>500</const> à <const>300</const><br>
+- les dégâts sont réduits de <const>100%</const> à <const>50%</const> des dégâts d'attaque<br>
+<br>
+<p style="font-weight: 700; margin-bottom: 6px;">VALKYRIE:</p>
+<action>JUMP</action><br>
+- la durée de lancement du sort passe de <const>0.05</const> à <const>0.15</const><br>
+<br>
+<br><p style="font-weight: 700; margin-bottom: 6px;">Buffs:</p><br>
+
+<p style="font-weight: 700; margin-bottom: 6px;">DOCTOR_STRANGE:</p>
+<action>SHIELD</action><br>
+- la valeur du bouclier passe de <const>maxMana * 0.3</const> à <const>maxMana * 0.5 + 50</const><br>
+- le coût en mana du bouclier passe de <const>20</const> à <const>40</const><br>
+<action>PULL</action><br>
+- la portée augmente de <const>300</const> à <const>400</const><br>
+
+<br><p style="font-weight: 700; margin-bottom: 6px;">IRONMAN:</p>
+<action>BURNING</action><br>
+- les dégâts sont augmentés de <const>manaRegeneration *3</const> à <const>manaRegeneration *5 + 30</const><br>
+
+<br><p style="font-weight: 700; margin-bottom: 6px;">Changements généraux:</p><br>
+
+Le mana est déduit après l'utilisation d'un sort<br>
+Cela affecte <action>FIREBALL</action> et <action>AOEHEAL</action><br>
+Ils évoluent maintenant en fonction du mana actuel.
+     <br><br>
+        Voir les règles misent à jour pour plus de détails.
+  </span>
+    <!-- END -->
+</div>
+
+            <!-- LEAGUE ALERT -->
+            <div style="color: #7cc576;
+            background-color: rgba(124, 197, 118,.1);
+            padding: 20px;
+            margin-right: 15px;
+            margin-left: 15px;
+            margin-bottom: 10px;
+            text-align: left;">
+                <div style="text-align: center; margin-bottom: 6px">
+                    <img src="//cdn.codingame.com/smash-the-code/statement/league_wood_04.png" />
+                </div>
+
+
+
+                <!-- BEGIN bronze -->
+                <p style="text-align: center; font-weight: 700; margin-bottom: 6px;">
+                   Résumé des nouvelles règles
+                </p>
+                <span class="statement-league-alert-content">
+                Les héros ont maintenant <const>3</const> sorts chacun.<br />
+                C'est le dernier changement de règles.<br />
+                 Lisez le statement mis à jour pour plus de détails.
+              </span>
+                <!-- END -->
+            </div>
+
+
+            <!-- GOAL -->
+            <div class="statement-section statement-goal">
+                <h1>
+                    <span class="icon icon-goal">&nbsp;</span>
+                    <span>Objectif</span>
+                </h1>
+                <div class="statement-goal-content">
+                    <!-- LEAGUES wood3 wood2 wood1 bronze -->
+                    Détruire la tourelle de votre adversaire.
+                </div>
+            </div>
+
+
+            <!-- RULES -->
+            <div class="statement-section statement-rules">
+                    <h1>
+                        <span class="icon icon-rules">&nbsp;</span>
+                        <span>Règles</span>
+                    </h1>
+                    <div><div class="statement-rules-content">
+
+                        <p>Le jeu se déroule sur une carte de <const>1920</const> unités de large et <const>750</const> unités de haut avec deux joueurs.<br>
+                            Les coordonnées <const>X=0</const>,<const> Y=0</const> correspondent au pixel situé en haut à gauche.</p>
+
+                        <!-- BEGIN wood3 wood2 -->
+                        <p>Les joueurs contrôlent chacun <const>2</const> héros qu'ils choisissent avant que la partie ne commence. Pour choisir un héro, il suffit d'afficher en sortie son nom.</p>
+
+                        <p>Les joueurs choisissent le premier héros simultanément. Ils choisissent ensuite le second héros de la même façon. Le 2ème héros est choisi au tour d'après pour permettre aux joueurs de choisir en fonction du premier héros choisi par l'adversaire. </p>
+                        <!-- END -->
+
+
+                        <p>Les équipes commencent sur les côtés opposés de la route qui traverse la carte.</p>
+
+                        <p>Une tourelle est placée à côté des points d'apparition de chaque équipe. Chaque joueur doit protéger sa tourelle tout en essayant de détruire celle de son adversaire.</p>
+
+                        <p>Tous les <const>15</const> tours une vague d'unités alliées apparaît pour chaque joueur, à côté de leurs tourelles respectives, pour les aider à combattre. Ces unités se dirigent vers la tourelle adverse mais s'arrêteront pour attaquer les ennemis qu'elles croisent.</p>
+
+                        <!-- BEGIN wood1 bronze-->
+                        <p>Un nombre aléatoire entre <const>3</const> and <const>5</const> de créatures neutre vont apparaître autour des buissons au dessus de la route. Ils n'attaqueront pas tant qu'ils ne sont pas attaqués.</p>
+                        <!-- END -->
+
+                        <br>
+
+                        <p><strong>Les héros</strong><br>
+                            <br>
+                            Vous pouvez choisir parmi les héros suivants:<br>
+                            <action>DEADPOOL</action> <br>
+                            <action>DOCTOR_STRANGE</action><br>
+                            <action>HULK</action><br>
+                            <action>IRONMAN</action> <br>
+                            <action>VALKYRIE</action><br></p>
+
+                        <br>
+
+                    <!-- BEGIN wood2-->
+                    Quand votre héros achève des unités ennemies, des héros ou des créatures neutres vous gagnez des pièces d'or que vous pouvez utiliser pour acheter des équipements qui vont instantanément vous rendre plus puissant</p>
+                    <!-- END -->
+
+
+                    <br>
+
+                    <br>
+                    <!-- BEGIN bronze-->
+                    <p><strong>Sorts</strong><br>
+                    <br>
+                    Chaque héros a ses propres sorts et possède presque le même pattern de commandes.<br>
+                    <br>
+                    <!-- END -->
+
+                    <p><strong>Actions</strong><br>
+                        <br>
+                        Chaque tour votre héros doit effectuer l'une des actions suivantes:
+                    </p><ul>
+                    <li>  <action>WAIT</action></li>
+                    <li> <action>MOVE  x y</action> se déplace vers <const>(x, y)</const> </li>
+                    <li> <action>ATTACK</action> <var>unitId</var> tente d'attaquer <const>unitId</const></li>
+                    <li> <action>ATTACK_NEAREST</action> <var>unitType</var> attaque l'entité la plus proche du type donné</li>
+                    <li>  <action>MOVE_ATTACK x y</action> <var>unitId</var> se déplace vers <const>(x, y)</const> et attaque <const>unitId</const></li>
+                    <li> <action>BUY</action> <var>item_name</var></li>
+                    <li><action>SELL</action> <var>item_name</var> </li>
+                    <li>Un des 3 sorts possédés par le héros choisi. Voir les détails dans les règles pour les experts.</li>
+                    </ul></p>
+                </div>
+
+                     <p><strong>Objets</strong><br>
+                        <br>
+
+                        Les objets sont des équipements qui augmentent différentes caractéristiques de votre héro.</p><br>
+
+                    <!-- Victory conditions -->
+                    <div class="statement-victory-conditions">
+                            <div class="icon victory"></div>
+                            <div class="blk">
+                                <div class="title">Conditions de victoire</div>
+                                <div class="text">
+                                    <ul>
+                                        <li>Détruire la tourelle adverse</li>
+                                        <!-- BEGIN wood3 wood2 -->
+                                        <li>Tuer les deux héros ennemis</li>
+                                        <li>Avoir plus de last hits / denies que votre adversaire.</li>
+                                        <!-- END -->
+
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Lose conditions -->
+                        <div class="statement-lose-conditions">
+                            <div class="icon lose"></div>
+                            <div class="blk">
+                                <div class="title">Conditions de défaite</div>
+                                <div class="text">
+                                    <ul>
+                                        <li>Vous effectuez une action invalide ou vous ne répondez pas dans les temps</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            <!-- EXPERT RULES -->
+            <div class="statement-section statement-expertrules">
+                    <h1>
+                        <span class="icon icon-expertrules">&nbsp;</span>
+                        <span>Règles pour les experts</span>
+                    </h1>
+                    <div class="statement-expert-rules-content">
+                        <br>
+
+                        <p><strong>Collisions</strong><br>
+                            <br>
+
+                            Il n'y a pas de collisions entre les entités.</p><br>
+
+                        <p><strong>Types de tours</strong><br>
+                            <br>
+                            Il y a deux différents types de tours dans ce jeu.
+        <br><br>
+                            Le premier type est pour la sélection des héros et a lieu au début de la partie. Quand la variable <var>roundType</var> est négative, vous devez donner en sortie le nom du héros que vous voulez jouer. Si à la place vous donnez <action> WAIT </action> en sortie, un héros sera sélectionné à votre place.
+        <br>
+                            <br>Vous ne pouvez pas choisir deux fois le même héro. Vous pouvez choisir un héros que votre opposant a déjà choisi.<br>
+                            <br> Le second type est un tour de jeu normal où vous devez vous battre pour remporter la partie. <var>roundType</var> sera positive et sa valeur représentera le nombre de héros que vous contrôlez.</p><br>
+                            <p><strong>Buissons</strong><br>
+                                <br>
+                            Des buissons sont placés sur la carte. Ils permettent aux héros de se cacher.
+                            <br><br>
+                            Le tour après qu'un héros visible entre dans un buisson, il devient invisible si aucun héros ennemi ne partage le même buisson.<br><br>
+                            Les héros invisibles ne sont pas ciblable par les attaques ou par les sorts ciblés. Leurs informations seront disponibles dans les entrées lors du tour suivant mais pas celui d'après s'ils restent invisibles.
+                                                <br><br>
+                            Un buisson est représenté par un point sur la carte. La zone d'invisibilité est un cercle avec un rayon de <const>50</const> centré sur ce point.<br><br>
+                            Les unités neutres (Groot) et les tours peuvent tout de même cibler les héros invisible.<br><br>
+                            L'invisibilité est perdue lorsque un héros attaque une entité ennemie ou quand un héros ennemi entre dans le même buisson. L'invisibilité n'est pas perdue si le héros attaque une unité neutre.</p><br>
+                        <p><strong>Entités du jeu: Unités / Héros / Tourelles / Créatures neutres </strong><br>
+                            <br>
+
+                            Chaque entité a les attributs suivants:<br>
+                        <li><var>unitId</var></li>
+                        <li><var>team</var> - l'équipe à laquelle elle appartient. -1 pour les créatures neutres (Groot)</li>
+                        <li><var>type</var> - le type de l'entité : unité / un héros / une tourelle / une créature neutre (Groot)</li>
+                        <li><var>attackRange</var> - la distance depuis laquelle une unité peut attaquer</li>
+                        <li><var>health</var> - la quantité de dégâts qu'une unité peut subir avant de mourir</li>
+                        <li><var>shield</var> - quantité temporaire supplémentaire de santé attribuée à l'unité pour quelques tours. Le bouclier est réduit avant la santé lorsque des dégâts sont infligés</li>
+                        <li><var>mana</var> - la quantité de mana qu'une unité a à sa disposition pour pouvoir effectuer ses sorts</li>
+                        <li><var>attack_damage</var> - la quantité de dégâts qu'une unité peut effectuer avec une commande <action>ATTACK</action></li>
+                        <li><var>movement_speed</var> - la distance qu'une unité peut parcourir en un tour. Une entité s'arrête lorsqu'elle arrive et n'ira pas plus loin avant le prochain tour.</li>
+        <br>
+        Les entités ont aussi <var>maxHealth</var> et <var>maxMana</var>. Ces variables représentent les valeurs maximales que peuvent prendre les variables <var>health</var> et <var>mana</var>.
+        <br><br>
+        Les tourelles sont stationnaires. Elles ne se déplacent pas.
+                        </p><br>
+
+                        <p><strong>Locations des points d'apparition</strong><br>
+                            <br>
+
+
+                        <!-- BEGIN wood1 bronze -->
+                        Les héros du joueur 0 apparaissent aux points:<br>
+                        x: <const>200</const>,  y: <const>590</const><br>
+                        x: <const>200</const>,  y: <const>490</const><br>
+                        Les héros du joueur 1 apparaissent aux points:<br>
+                        x: <const>1720</const>, y: <const>590</const><br>
+                        x: <const>1720</const>, y: <const>490</const><br>
+                        </p><br>
+                        <!-- END -->
+
+                        <p><strong>Caractéristiques des héros <!-- BEGIN bronze -->et détails des sorts<!-- END --></strong><br>
+                            <br>
+
+                            <!-- BEGIN wood3 wood2 wood1 -->
+                        <table style="width:100%; border: 1px solid white;">
+                            <tr>
+                                <th " style="width : 30%;">Noms</th>
+                                <th " style="width : 70%;">Caractéristiques</th>
+                            </tr>
+                            <tr><td valign="top"><action style="margin: 20px; font-size: 150%">DEADPOOL</action></td><td></td></tr><tr>
+                                 <td valign="top"><ul><li>health 1380</li>
+                                    <li>mana 100</li>
+                                    <li>damage 80</li>
+                                    <li>move speed 200</li>
+                                    <li>mana regen 1</li>
+                                    <li>attackRange 110</li>
+                                </ul></td>
+                                <td>
+                                        <ul> <action>COUNTER</action>
+                                            <ul><li>renvoi tous les dégâts infligés sur l'entité ennemie la plus proche et regagne la santé qu'il a perdu pendant que COUNTER était actif. Meurt si sa santé atteint 0.
+                                            </li>
+                                                <li>coût en mana: 40</li>
+                                                <li>durée de lancement: instantanée</li>
+                                                <li>portée: 350</li>
+                                                <li>temps en tours: 1</li>
+                                                <li>cooldown: 5</li>
+                                                <li>damage: damage received * 1.5</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>WIRE x y</action>
+                                            <ul><li>envoie un missile qui étourdit le premier ennemi qu'il rencontre. Un énorme choc électrique est envoyé à travers le câble infligeant des dégâts à l'ennemi</li>
+                                                <li>coût en mana 50</li>
+                                                <li>portée: 200</li>
+                                                <li>rayon: 50</li>
+                                                <li>temps d'étourdissement: tour actuel et le tour d'après</li>
+                                                <li>durée de lancement: instantanée</li>
+                                                <li>cooldown: 9</li>
+                                                <li>multiplier de dégâts: maxMana du héros ciblé * 0.5</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>STEALTH x y</action>
+                                            <ul><li>devient temporairement invisible en se déplaçant vers x y</li>
+                                                <li>coût en mana: 30</li>
+                                                <li>durée : 5</li>
+                                                <li>cooldown: 6</li>
+                                                <li>durée de lancement: 1 tour</li>
+                                            </ul>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <tr>
+                        <td valign="top"><action style="margin: 20px; font-size: 150%">HULK</action></td>
+                <td></td></tr><tr>
+                                  <td valign="top"><ul>
+                                        <li>health 1450</li>
+                                        <li>mana 90</li>
+                                        <li>damage 80</li>
+                                        <li>move speed 200</li>
+                                        <li>mana regen 1</li>
+                                        <li>range 95</li>
+                                    </ul></td>
+                                    <td>
+                                        <ul><action>CHARGE unitId</action>
+                                            <ul><li>se déplace vers la cible, l'attaque et réduit sa vitesse de déplacement de 150 pendant pour les 2 prochains tours</li>
+                                                <li>coût en mana: 20</li>
+                                                <li>durée de lancement: 0.05</li>
+                                                <li>portée: 300</li>
+                                                <li>cooldown: 4</li>
+                                                <li>damage: attackDamage*0.5</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>EXPLOSIVESHIELD</action>
+                                            <ul><li>se créer un bouclier temporaire. Si le bouclier est détruit avant qu'il expire, il explose et inflige des dégâts aux ennemis avoisinants</li>
+                                                <li>coût en mana: 30</li>
+                                                <li>durée en tours: 4</li>
+                                                <li>durée de lancement: instantanée</li>
+                                                <li>bonus de santé temporaire: maxHealth*0.07 + 50</li>
+                                                <li>portée de l'explosion: 151</li>
+                                                <li>dégâts de l'explosion: 50</li>
+                                                <li>cooldown: 8</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>BASH unitId</action>
+                                            <ul><li>attaque et étourdit une entité ennemie (à l'exception des tourelles)</li>
+                                                <li>coût en mana: 40</li>
+                                                <li>durée: tour actuel et tour suivant</li>
+                                                <li>portée: 150</li>
+                                                <li>cooldown: 10</li>
+                                                <li>durée de lancement: attackTime</li>
+                                            </ul>
+                                        </ul>
+                                    </td>
+                                </tr>
+                               <tr><td valign="top"><action style="margin: 20px; font-size: 150%">VALKYRIE</action></td><td></td></tr><tr>
+                                   <td valign="top"><ul><li>health 1400</li>
+                                        <li>mana 155</li>
+                                        <li>damage 65</li>
+                                        <li>move speed 200</li>
+                                        <li>mana regen 2</li>
+                                        <li>range 130</li>
+                                    </ul></td>
+                                    <td>
+                                        <ul><action>SPEARFLIP unitId</action>
+                                            <ul><li>déplace l'unité ciblé vers le côté opposé de valkyrie en lui infligeant des dégâts et en l'étourdissant pendant le tour actuel</li>
+                                                <li>coût en mana: 20</li>
+                                                <li>durée de lancement: 0.1</li>
+                                                <li>portée: 155</li>
+                                                <li>cooldown: 3</li>
+                                                <li>dégâts: attack damage * 0.4 </li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>JUMP x y</action>
+                                            <ul><li>saute vers la position donnée et inflige des dégâts à l'unité la plus proche</li>
+                                                <li>coût en mana 35</li>
+                                                <li>durée de lancement: 0.15</li>
+                                                <li>portée: 250</li>
+                                                <li>cooldown: 3</li>
+                                                <li>dégâts: attack damage</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>POWERUP</action>
+                                            <ul><li>boost ses caractéristiques de façon temporaire</li>
+                                                <li>coût en mana: 50</li>
+                                                <li>durée: 4</li>
+                                                <li>cooldown: 7</li>
+                                                <li>portée additionnelle: 10</li>
+                                                <li>dégâts d'attaque additionnels: speed * 0.3</li>
+                                                <li>durée de lancement: instantanée</li>
+                                            </ul>
+                                        </ul>
+                                    </td>
+                                </tr>
+                               <tr><td valign="top"><action style="margin: 20px; font-size: 150%">IRONMAN</action></td><td></td></tr><tr>
+                                    <td valign="top"><ul><li>health 820</li>
+                                        <li>mana 200</li>
+                                        <li>damage 60</li>
+                                        <li>move speed 200</li>
+                                        <li>mana regen 2</li>
+                                        <li>range 270</li>
+                                    </ul></td>
+                                    <td>
+                                        <ul><action>BLINK x y</action>
+                                            <ul><li>saute vers la position donnée et regagne 20 points de mana</li>
+                                                <li>coût en mana: 16</li>
+                                                <li>range: 200</li>
+                                                <li>durée de lancement: 0.05</li>
+                                                <li>cooldown: 3</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action> FIREBALL x y</action>
+                                            <ul><li>envoie une boule de feu qui inflige des dégâts à tous les héros et créatures neutres présents sur la ligne</li>
+                                                <li>coût en mana: 60</li>
+                                                <li>portée: 900</li>
+                                                <li>temps de vol: 0.9</li>
+                                                <li>rayon d'impact: 50</li>
+                                                <li>dégâts: 55 * distance parcourue/1000 + mana actuel * 0.2 </li>
+                                                <li>durée de lancement: instantanée</li>
+                                                <li>cooldown: 6 </li>
+                                            </ul>
+                                        </ul>
+                                        <ul> <action> BURNING x y</action>
+                                            <ul><li>brûle la zone ciblée en infligeant des dégâts à tous les ennemis présents</li>
+                                                <li>coût en mana: 50</li>
+                                                <li>portée: 250</li>
+                                                <li>rayon: 100</li>
+                                                <li>durée de lancement: instantanée</li>
+                                                <li>dégâts: manaRegeneration * 5 + 30</li>
+                                                <li>cooldown: 5</li>
+                                            </ul>
+                                        </ul>
+                                    </td>
+                                </tr>
+                                <tr><td valign="top"><action style="margin: 20px; font-size: 150%">DOCTOR_STRANGE</action></td><td></td></tr><tr>
+                                   <td valign="top"><ul><li>health 955</li>
+                                        <li>mana 300</li>
+                                        <li>damage 50</li>
+                                        <li>move speed 200</li>
+                                        <li>mana regen 2</li>
+                                        <li>range 245</li>
+                                    </ul></td>
+                                    <td>
+                                        <ul><action>AOEHEAL x y</action>
+                                            <ul><li>soigne les entités alliées proche (en excluant les tourelles)</li>
+                                                <li>coût en mana: 50</li>
+                                                <li>durée de lancement: instantanée</li>
+                                                <li>portée: 250</li>
+                                                <li>rayon: 100</li>
+                                                <li>quantité soignée: mana * 0.2</li>
+                                                <li>cooldown: 6</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>SHIELD unitId</action>
+                                            <ul><li>donne un bouclier à une unité alliée</li>
+                                                <li>coût en mana 40</li>
+                                                <li>durée en tours: 2</li>
+                                                <li>portée: 500</li>
+                                                <li>bonus de santé temporaire: maxMana * 0.5 + 50</li>
+                                                <li>cooldown: 6</li>
+                                                <li>durée de lancement: instantanée</li>
+                                            </ul>
+                                        </ul>
+                                        <ul><action>PULL unitId</action>
+                                            <ul><li>attire unitId vers la position actuelle de Dr. Strange, l'étourdit pour le tour actuel et aspire un peu de son mana si la cible est un héros ennemi </li>
+                                                <li>coût en mana 40</li>
+                                                <li>portée de déplacement: 200</li>
+                                                <li>portée de lancement: 400</li>
+                                                <li>mana aspiré de la cible: manaRegeneration de la cible * 3 + 5 </li>
+                                                <li>cooldown: 5</li>
+                                                <li>durée de lancement: 0.3</li>
+                                                <li>retard de lancement: 0.1</li>
+                                            </ul>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br><br>
+                            <!-- END --></p><br>
+
+                        <p><strong>Attaques</strong><br>
+
+                            <br>
+
+        Les héros ont un temps d'attaque de 0.1 et les unités un temps d'attaque de 0.2.<br><br>
+
+        Les projectiles des unités à distance ont un temps d'attaque additionnel égal à temps d'attaque * distance / <var>attackRange</var> pour atteindre leur cible.<br><br>
+
+        Une unité ou un héros est considéré comme "distance" si sa portée (<var>attackRange</var>) est supérieure à 150. <br><br>
+
+        Si une unité est hors de portée, votre héros va d'abord se déplacer vers elle et ensuite essayer de l'attaquer. C'est très pratique si vous êtes presque à portée.<br><br>
+
+        Le temps utilisé pour se déplacer est distance / <var>moveSpeed</var> <br><br>
+
+        Si votre héros a <const>75</const> de portée et se déplace à une distance de <const>100</const> sur la carte, à <const>200</const> de <var>moveSpeed</var>, il utilise alors <const>100</const> / <const>200</const> = <const>0.5</const> temps et il lui restera alors la moitié du tour pour attaquer. L'attaque aura lieu à <const>0.5</const> + <const>0.1</const> vu que le héros est "mélée" dans cet exemple.<br><br>
+        La distance entre le héros et l'unité doit être égale ou inférieure à la portée du héros pour que l'attaque soit effectuée.<br><br>
+        Les attaques avec un temps d'attaque supérieur à 1 n'ont pas lieu.<br><br>
+
+        <action>ATTACK_NEAREST</action> <var>unitType</var> : identique à la commande ATTACK cependant la cible choisie est l'entité du type donné la plus proche.<br>
+        <action>MOVE_ATTACK x y </action>  <var>unitId</var> : votre héros se déplace d'abord vers le point donné et exécute ensuite l'attaque, s'il a assez de temps et s'il est à moins de <var>attackRange</var> de la cible.
+
+                        </p><br>
+
+    <!-- BEGIN wood2 wood1 bronze -->
+                    <p><strong>Last Hit & Deny</strong><br>
+                        <br>
+
+                    <p> Chaque attaque qui achève une entité est appelée un last hit. Un last hit infligé à une entité ennemie par l'un de vos héros vous rapporte des pièces d'or.</p>
+
+                    <p>Un last hit effectué par l'un de vos héros sur une entité alliée est appelé un deny et empêche votre adversaire d'achever l'entité pour recevoir les pièces d'or. Vous pouvez seulement attaquer un héros allié ou une unité alliée quand leur santé est inférieure à <const>40%</const>.</p>
+                    </p><br>
+                    <!-- END -->
+
+                    <p><strong>Comportement des unités</strong><br>
+                        <br>
+                        Si votre héros attaque un héros ennemi pendant que ses unités alliées sont autour de lui, elles vont vous suivre et vous attaquer. Cela s'appelle "l'aggro". L'agresseur doit être à une distance de moins de 300 pour que les unités ennemies l'aggro. L'aggro est annulée si le héros s'éloigne d'elles de plus de 300. L'aggro des unités dure 3 tours en incluant le tour initial.<br><br>
+
+                        Les unités vont toujours essayer d'attaquer le héros qui les a aggro.<br><br>
+
+                        Si elles ne sont pas aggro, les unités se déplacent directement vers la tourelle ennemie depuis leur position actuelle. <br>
+                        Sur leurs chemins, elles s'arrêtent toujours pour attaquer l'entité ennemie la plus proche si elle se trouve à une distance inférieure à <var>attackRange</var>.<br>
+                        - Si plusieurs cibles sont à une même distance, l'ennemi avec le moins de <var>health</var> est sélectionné.<br>
+                        - Ensuite, c'est l'ennemi avec la coordonnée <var>y</var> la plus grande qui est sélectionné.<br>
+                        - Enfin, c'est l'ennemi avec la <var>unitId</var> la plus petite qui est sélectionné.</p><br>
+
+
+                    <p><strong>Comportement des tourelles</strong><br>
+                        <br>
+                        L'ordre d'attaque des tourelles est le suivant:
+                        <br><br>
+                        Cible d'abord un héros ennemi qui attaque un héros allié.<br>
+                        Cible ensuite l'unité ennemie à portée la plus proche.<br>
+                        Cible ensuite le héros ennemi le plus proche.<br>
+                        <br><br>
+                        Utiliser des sorts ou attaquer la tourelle ne force pas l'aggression de la tourelle.
+                        </p><br>
+                        <p><strong>Créatures neutres</strong><br>
+                            <br>
+                            Lorsqu'elles sont attaquées, les créatures neutres attaquent le héros le plus proche, s'il se trouve à moins de <const>300</const> de portée. Elles chassent le héros ciblé jusqu'à une distance maximale de <const>300</const>, après quoi elles retournent à leurs points d'apparition.<br><br>
+                            Elles regagnent l'ensemble de leur santé dès qu'elles atteignent leurs points d'apparition.
+                            <br><br>
+                            Les créatures neutres apparaissent au tour <const>4</const> et réapparaissent plus puissantes tous les <const>40</const> tours après si elles ont été tuées. Leurs caractéristiques et leurs récompenses de pièces d'or sont augmentées de <const>20%</const> à chaque fois.  (<var>damage</var>, <var>health</var>,<var> gold</var>)</p><br>
+
+                        <!-- BEGIN bronze -->
+                    <p><strong>Sorts</strong><br>
+                        <br>
+
+                    <p>Tous les sorts on un coût appelé <var>mana</var>, une portée et un <var>cooldown</var> qui vous empêche d'utiliser le même sort à chaque tour.</p>
+
+                    <p>Les sorts ont une durée sur un ou plusieurs tours. Par exemple <action>SHIELD</action> et <action>POWERUP</action>. </p>
+                    </p><br>
+
+                    <p><strong>Effet d'étourdissement (stun)</strong><br>
+                        <br>
+
+                        Certains sorts appliquent un étourdissement (<b>stun</b>) sur une untié. Les héros étourdis ne sont pas aptes à exécuter une quelconque action pendant la durée du <b>stun</b></p><br>
+                    <!-- END -->
+                        <p><strong>Récompenses en pièces d'or</strong><br>
+                        <br>
+
+    <table style="width:100%; border: 1px solid white; ">
+    <th>
+    Type de l'entité
+    </th>
+    <th>
+    Récompenses en pièces d'or
+    </th>
+    <tr>
+    <td>
+    Unités mélées
+    </td>
+    <td>
+    30
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Unités distances
+    </td>
+    <td>
+    50
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Héro
+    </td>
+    <td>
+    300
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Denied Héro
+    </td>
+    <td>
+    150
+    </td>
+    </tr>
+    <tr>
+    <td>
+    Groot
+    </td>
+    <td>
+    100 - première apparition
+    </td>
+    </tr>
+    </table>
+
+                        </p><br>
+
+
+    <!-- BEGIN wood2 wood1 bronze -->
+                    <p><strong>Objets</strong><br>
+                        <br>
+
+                        Les objets augmentent les caractéristiques de votre héros lorsqu'ils sont équipés. La quantité totale de caractéristiques et de bonus varie entre chaque objets. Ces caractéristiques sont ajoutées aux caractéristiques actuelles de votre héros et sont perdues lorsque l'objet est vendu.<br> <br>
+                        Les bonus possibles des objets sont <var>health</var>, <var>maxHealth</var>, <var>mana</var>, <var>maxMana</var>, <var>manaRegeneration</var>, <var>attack_damage</var>, <var>moveSpeed</var>.<br><br>
+
+                        Lorsque vous vendez un objet augmentant votre <var>mana</var>, votre <var>mana</var> sera le minimum entre <const>0</const> et votre <var>mana</var> actuel - <var>mana</var> bonus ajouté par l'objet. <br><br>
+
+                        Lorsque vous vendez un objet augmentant votre <var>health</var>, votre <var>health</var> sera le minimum entre <const>1</const> et votre <var>health</var> actuel - <var>health</var> bonus ajoutée par l'objet. <br><br>
+
+                    <p><strong>Acheter et vendre</strong><br>
+                        <br>
+
+                    <p>Un héros peut acheter un objet avec la commande <action>BUY</action> <var>item_name</var></p>
+
+                    <p>Un héros peut vendre un objet avec la commande <action>SELL</action> <var>item_name</var>. <const>50%</const> de la valeur initiale en pièces d'or (<var>gold</var>) est remboursée lors de la vente de l'objet.</p>
+
+                    <p>Chaque héros peut avoir jusqu'à <const>4</const> objets à la fois. Vous pouvez avoir plusieurs copies du même objet sur un héro, mais vous pouvez seulement <action>BUY</action> et <action>SELL</action> une seule fois par héros par tour.</p>
+                    </p><br>
+
+                   <p><strong>Les potions</strong><br>
+                        <br>
+
+                    <p>Les potions sont des objets consommés immédiatement après l'achat. Leurs caractéristiques sont ajoutées directement au héro. Vous ne pouvez pas les vendre et elles sont retirées de l'inventaire de votre héros le tour après qu'elles aient été achetées. Votre héros a tout de même besoin d'une case libre dans son inventaire pour pouvoir acheter une potion.</p>
+
+                    <p>Les potions peuvent vous redonner du <var>mana</var> ou de la santé (<var>health</var>). Les bonus de santé et de mana obtenus avec les potions ne vont pas au-délà de <var>maxHealth</var> ou <var>maxMana</var>.</p><br>
+
+                    <p><strong>Caractéristiques des objets</strong><br>
+                        <br>
+
+                    <p>Tous les objets sont générés au début de la partie avec des caractéristiques complètement alétoires.</p>
+
+                    <p>Au début de la partie vous obtenez un montant de pièces d'or alétoire entre <const>100</const> et <const>650</const>. Parmi les objets générés, certains correspondent au montant initial de pièces d'or affecté à chaque joueur et sont donc abordables dès le début de la partie.</p>
+
+                    <p>Tous les autres objets sont générés pour correspondrent à différentes gammes de prix, de "début de jeu" à "fin de jeu".</p></p><br>
+                    <!-- END -->
+
+
+                    <p><strong>Informations générales</strong><br>
+                        <br>
+
+                        Le jeu semble complexe mais il est en fait très simple et amusant.</p><br>
+
+
+                </div>
+            </div>
+
+            Pour plus de détails rendez-vous sur <a href="https://github.com/Illedan/BOTG-Refree">GitHub</a>
+
+            <!-- PROTOCOL -->
+            <div class="statement-section statement-protocol">
+                    <h1>
+                        <span class="icon icon-protocol">&nbsp;</span>
+                        <span>Entrées du jeu</span>
+                    </h1>
+                    <!-- Protocol block -->
+                    <div class="blk">
+                        <div class="title">Entrées d'initialisation</div>
+                        <div class="text"><span class="statement-lineno">Ligne 1:</span> votre numéro de <var>team</var>, peut être 0 ou 1.<br>
+                            <span class="statement-lineno">Ligne 2:</span><var>bushAndSpawnPointCount</var> le nombre de buissons et de points d'apparition<br><br>
+
+                            <span class="statement-lineno">Les <var>bushAndSpawnPointCount</var> lignes suivantes:</span> String entityType [Bush, Spawn], Integer <var>x</var>, Integer <var>y</var>, Integer <var>radius</var><br><br>
+
+                            <span class="statement-lineno">Ligne suivante:</span> <var>itemCount</var> le nombre total d'objets disponibles dans la partie.<br>
+                            <span class="statement-lineno">Les <var>itemCount</var> lignes suivantes:</span>
+                            <ul>
+                                <li>String <var>itemName</var></li>
+                                <li>Integer <var>itemCost</var></li>
+                                <li>Integer <var>damage</var></li>
+                                <li> Integer <var>health</var></li>
+                                <li>Integer <var>maxHealth</var></li>
+                                <li>Integer <var>mana</var></li>
+                                <li> Integer <var>maxMana</var></li>
+                                <li>Integer <var>moveSpeed</var></li>
+                                <li>Integer <var>manaRegeneration</var></li>
+                                <li> Integer <var>isPotion</var> [c'est une potion si la variable est égale à 1]</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Protocol block -->
+                    <div class="blk">
+                        <div class="title">Entrées pour un tour de jeu</div>
+                        <div class="text">
+                            <span class="statement-lineno">Ligne 1:</span> votre total de pièces d'or (<var>gold</var>) as Integer<br>
+                            <span class="statement-lineno">Ligne 2:</span> le nombre total de pièces d'or de votre opposant (<var> gold</var>) as Integer<br>
+                            <span class="statement-lineno">Ligne 3:</span> <var>roundType</var> un entier qui vous informe si vous êtes à la phase de sélection du héros ou à la phase de jeu.<br>
+                            <span class="statement-lineno">Ligne 4:</span> <var>entityCount</var> un nombre qui représente la somme de tous les héros, unités, tourelles et créatures neutres actuellement en jeu.<br>
+                            <br>
+
+                            <span class="statement-lineno">Les <var>entityCount</var> entrées suivantes:</span>
+                            <ul>
+                                <li>Integer <var>unitId</var></li>
+                                <li>Integer <var>team</var></li>
+                                <li>String <var>unitType</var></li>
+                                <li> Integer <var>x</var></li>
+                                <li>Integer <var>y</var></li>
+                                <li>Integer <var>attackRange</var></li>
+                                <li> Integer <var>health</var></li>
+                                <li>Integer <var>max_health</var></li>
+                                <li>Integer <var>shield</var></li>
+                                <li>Integer <var>attack_damage</var></li>
+                                <li> Integer <var>movement_speed</var></li>
+                                <li>Integer <var>stun_duration</var></li>
+                                <li> Integer <var>gold_value</var></li>
+                            </ul>
+                            <br><br>Si <var>unitType</var> est un <action>HERO</action> il aura aussi:<br>
+                            <ul>
+                                <li> Integers <var>countDown1</var>, <var>countDown2</var> et <var>countDown3</var> représentants les nombres des tours à attendre avant que ces sorts soient de nouveau disponibles à l'utilisation.</li>
+                                <li>Integer <var>mana</var></li>
+                                <li>Integer <var>maxMana</var></li>
+                                <li> Integer <var>manaRegeneration</var></li>
+                                <li>String <var>heroType</var></li>
+                                <li>Integer <var>isVisible</var> [1 si l'entité est visible]</li>
+                                <li> Integer <var>itemsOwned</var></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Protocol block -->
+                    <div class="blk">
+                        <div class="title">Sorties pour un tour de jeu</div>
+                        <div class="text">En fonction de la valeur de <var>roundType</var> votre sortie doit être soit le nom d'un héros soit une commande de héro.
+                            <br><br>
+                            Si <var>roundType</var> est négative, vous devez choisir un héro:
+                            </br><br>
+                            <strong>Une ligne de sortie:</strong> <var>heroName</var> doit être un des héros disponibles : <action>DEADPOOL</action>, <action>DOCTOR_STRANGE</action>, <action>HULK</action>, <action>IRONMAN</action>, <action>VALKYRIE</action>
+                            <br></br>
+                            Si <var>roundType</var> est positive, cela veut dire que vous avez <var>roundType</var> héros et que vous devez afficher en sortie:
+                            <br></br>
+                            <strong>Une ligne pour chaque héros vivant que vous possédez, contenant une des actions suivantes:</strong>
+                            </br>
+                            <ul>
+                                <li><action>WAIT</action></li>
+                                <li><action>MOVE x y</action></li>
+                                <li><action>ATTACK unitId</action></li>
+                                <li><action>ATTACK_NEAREST unitType</action> [UNIT, HERO, TOWER, GROOT]</li>
+                                <li><action>MOVE_ATTACK x y unitId</action></li>
+                                <li><action>BUY itemName</action></li>
+                                <li><action>SELL itemName</action></li>
+                            </ul>
+                            Pour afficher un message personnalisé dans le jeu: <action>[votre commande];[votre message personnalisé]</action> (ex: <action>MOVE 1 2;BotG est sympa!</action>)
+                        </div>
+                    </div>
+
+                    <!-- Protocol block -->
+                    <div class="blk">
+                        <div class="title">Contraintes</div>
+                        <div class="text">
+                            Number of items: 23 <br>
+                            Number of Neutral Units (Groots) <br>
+                            Temps de réponse pour le premier tour ≤ 1000ms <br>
+                            Temps de réponse pour un tour ≤ 50ms</div>
+                    </div>
+                </div>
+    </div>

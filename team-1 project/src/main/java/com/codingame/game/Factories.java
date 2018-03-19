@@ -55,8 +55,9 @@ public class Factories {
 
         // Since stub doesn't support IFs, just take heroes
         if(type.startsWith("WAIT")){
-            if(Const.game.round==0) type = HeroType.IRONMAN.name();
-            else if(Const.game.round==1) type = HeroType.HULK.name();
+            if(Const.game.round==0) type = HeroType.HULK.name();
+            else if(Const.game.round==1 && player.heroes.get(0).heroType.equals("IRONMAN") ) type = HeroType.DEADPOOL.name();
+            else if(Const.game.round==1) type = HeroType.IRONMAN.name();
             hero.heroType = type;
         }
 
@@ -134,7 +135,7 @@ public class Factories {
         Tower tower = new Tower(spawn.x, spawn.y, (int)(Const.TOWERHEALTH*Const.TOWERHEALTHSCALE), team, player);
         tower.skin = team == 1 ? Const.BLUETOWER : Const.REDTOWER;
         tower.range = 400;
-        tower.damage = 100;
+        tower.damage = Const.TOWERDAMAGE;
         player.tower = tower;
         tower.attackTime = 0.2;
 
@@ -159,7 +160,7 @@ public class Factories {
         creature.moveSpeed = 250;
         creature.goldValue = (int)(Const.NEUTRALGOLD*amplitude);
         creature.creatureType = "GROOT";
-        Const.viewController.addSprite(creature, -1);
+        Const.viewController.addSprite(creature, -1, (1-1.0/3.0)+amplitude/3);
         creature.attackTime = 0.2;
 
         return creature;

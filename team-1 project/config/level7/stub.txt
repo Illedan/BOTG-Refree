@@ -1,0 +1,42 @@
+read myTeam:int
+read bushAndSpawnPointCount:int
+
+loop bushAndSpawnPointCount read entityType:word(20) x:int y:int radius:int
+
+read itemCount:int
+loop itemCount read itemName:word(20) itemCost:int damage:int health:int maxHealth:int mana:int maxMana:int moveSpeed:int manaRegeneration:int isPotion:int
+
+gameloop
+read gold:int
+read enemyGold:int
+read roundType:int
+read entityCount:int
+loop entityCount read unitId:int team:int unitType:word(20) x:int y:int attackRange:int health:int maxHealth:int shield:int attackDamage:int movementSpeed:int stunDuration:int goldValue:int countDown1:int countDown2:int countDown3:int mana:int maxMana:int manaRegeneration:int heroType:word(20) isVisible:int itemsOwned:int
+write WAIT
+WAIT
+
+STATEMENT
+Made with love by AntiSquid, Illedan and Wildum.
+You can help children learn to code while you participate by donating to CoderDojo.
+
+INPUT
+bushAndSpawnPointCount: useful from wood1, represents the number of bushes and the number of places where neutral units can spawn
+isPotion: 0 if it's not instantly consumed
+roundType: a positive value will show the number of heroes that await a command
+isVisible: 0 if it isn't
+entityType: BUSH, from wood1 it can also be SPAWN
+itemCount: useful from wood2
+unitType: UNIT, HERO, TOWER, can also be GROOT from wood1
+stunDuration: useful in bronze
+countDown1: all countDown and mana variables are useful starting in bronze
+heroType: DEADPOOL, VALKYRIE, DOCTOR_STRANGE, HULK, IRONMAN
+itemsOwned: useful from wood1
+itemName: contains keywords such as BRONZE, SILVER and BLADE, BOOTS connected by "_" to help you sort easier
+itemCost: BRONZE items have lowest cost, the most expensive items are LEGENDARY
+damage: keyword BLADE is present if the most important item stat is damage
+moveSpeed: keyword BOOTS is present if the most important item stat is moveSpeed
+shield: useful in bronze
+
+OUTPUT
+If roundType has a negative value then you need to output a Hero name, such as "DEADPOOL" or "VALKYRIE".
+Else you need to output roundType number of any valid action, such as "WAIT" or "ATTACK unitId"

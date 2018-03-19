@@ -107,12 +107,12 @@ public class ViewController {
         }
         else if(effect.equals("shield"))
         {
-          //  if(unit.getShield() > 0) animationGroups.get(tuple.sprite).addShield();
-          //  else animationGroups.get(tuple.sprite).removeShield();
+            if(unit.getShield() > 0) animationGroups.get(tuple.sprite).addShield();
+            else animationGroups.get(tuple.sprite).removeShield();
         }
         else if(effect.equals("shieldexplosion"))
         {
-           // animationGroups.get(tuple.sprite).explodeShield();
+            animationGroups.get(tuple.sprite).explodeShield();
         }
         else if(effect.equals("wirehook")){
             Sprite wirehook = WireHookFactory.getInstance(Const.game.round, entityManager);
@@ -142,9 +142,12 @@ public class ViewController {
     }
 
     public void addObstacle(Bush obstacle){
-        entityManager.createSprite().setImage(obstacle.skin).setX((int)obstacle.x).setY((int)obstacle.y).setZIndex(-150).setAnchor(0.5);
+        entityManager.createSprite().setImage(obstacle.skin).setX((int)obstacle.x).setY((int)obstacle.y).setRotation(Const.random.nextDouble()*10.0).setZIndex(-150).setAnchor(0.5);
     }
 
+    public void addSprite(Unit unit, int team, double scale) {
+        spriteMap.put(unit.id, new Tuple(unit, createUnitSprite(unit).setScale(scale)));
+    }
     public void addSprite(Unit unit, int team) {
         if(unit instanceof Tower) spriteMap.put(unit.id, new Tuple(unit, createTower(unit)));
         else spriteMap.put(unit.id, new Tuple(unit, createUnitSprite(unit)));

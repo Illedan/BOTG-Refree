@@ -20,6 +20,7 @@ public class Const {
     public static boolean IGNORESKILLS = false;
     public static double TOWERHEALTHSCALE = 1.0;
     public static boolean IGNOREBUSHES = false;
+		public static int TOWERDAMAGE = 190;
 
     //MISC
     public static double EPSILON = 0.00001;
