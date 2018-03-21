@@ -216,6 +216,16 @@ public class ViewController {
                                           "\nteam: " + unit.team);
     }
 
+    private void emptyToolTip(Unit unit, Entity entity){
+        Map<String, Object> params = new HashMap<>();
+        params.put("type", "Corpse");
+        //TODO: load parameters the viewer needs for the general tooltip contents.
+        tooltipModule.registerEntity(entity, params);
+
+        //TODO: this can be used to change the extra contents of the tooltip throughout the game.
+        tooltipModule.updateExtraTooltipText(entity, "0");
+    }
+
     public void setRotation(Unit unit, Point target, double t){
         Tuple unitSprite = spriteMap.get(unit.id);
         if(unitSprite==null || unit instanceof Tower) return;
@@ -281,6 +291,7 @@ public class ViewController {
         Tuple tuple = spriteMap.get(unit.id);
         if(tuple == null) return;
 
+        emptyToolTip(unit, unit.sprite);
         animationGroups.get(tuple.sprite).kill();
         tuple.sprite.setAlpha(0, Curve.LINEAR);
         commitSprite(Const.game.t, tuple.sprite);
