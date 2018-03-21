@@ -56,7 +56,7 @@ public abstract class Event {
     }
 
     protected void runSilentlyTowards(Unit unit, Point targetPoint){
-        if(unit.forceVY != 0 || unit.forceVX != 0) return;
+        if(Math.abs(unit.forceVY) > Const.EPSILON || Math.abs(unit.forceVX) > Const.EPSILON) return;
         double targetDist = targetPoint.distance(unit);
         double coef = (((double) unit.moveSpeed)) / targetDist;
         unit.vx = (targetPoint.x - unit.x) * coef;
@@ -180,7 +180,7 @@ public abstract class Event {
 
         @Override
         ArrayList<Unit> onEventTime(double currentTime) {
-            if(unit.stunTime > 0 || (unit.forceVX != 0 || unit.forceVY != 0)) return EMPTYLIST;
+            if(unit.stunTime > 0 || (Math.abs(unit.forceVY) > Const.EPSILON || Math.abs(unit.forceVX) > Const.EPSILON)) return EMPTYLIST;
             unit.vx = vx;
             unit.vy = vy;
 
