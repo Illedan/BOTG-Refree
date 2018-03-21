@@ -209,7 +209,8 @@ public class MapFactory {
             totalCost += val*getPrice(stat);
         }
 
-        return (int)Math.max(Math.ceil(totalCost/2), Math.ceil(totalCost-(totalCost*totalCost/6000)) );
+        // return (int)Math.ceil(totalCost-(totalCost*totalCost/5000)) ;
+        return (int)Math.min(Math.max(Math.ceil(totalCost/2.5), Math.ceil(totalCost-(totalCost*totalCost/5000)) ),1200);
     }
 
     public static int getLimit(String type){

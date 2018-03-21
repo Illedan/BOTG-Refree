@@ -158,15 +158,15 @@ public class Player extends AbstractPlayer {
                                 Unit unit = Const.game.getUnitOfId(unitId);
                                 Const.viewController.addEffect(hero, unit, "spell", 0);
 
-                                if(!hero.allowedToTarget(unit)) {
+                                if(!hero.allowedToTarget(unit) || unit instanceof Tower) {
                                     printError(hero.heroType + " can't target unit with spell. Either invisible or not existing.");
                                     return;
                                 }
                             }
                             else if(outputValues.length==1 && skill.getTargetType() == SkillType.SELF){ }
                             else {
-                                printError(hero.heroType + " invalid number of parameters on spell. " + roundOutputSplitted[0]);
-                                return;
+                               printError(hero.heroType + " invalid number of parameters on spell. " + roundOutputSplitted[0]);
+                               return;
                             }
 
                             hero.mana-= skill.manaCost;

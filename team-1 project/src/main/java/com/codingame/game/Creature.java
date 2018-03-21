@@ -5,7 +5,7 @@ import java.util.List;
 public class Creature extends Unit {
 
     Point camp;
-    CreatureState state = CreatureState.peacefull;
+    public CreatureState state = CreatureState.peacefull;
     String creatureType;
     public Creature(double x, double y) {
         super(x, y, 1, -1, 300, null);

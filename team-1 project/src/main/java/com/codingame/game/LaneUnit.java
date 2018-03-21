@@ -34,6 +34,19 @@ public class LaneUnit extends Unit {
         aggroTset = 1.0;
         aggroUnit = null;
         aggroTimeLeft = -1;
-        moveAttackTowards(targetPoint);
+
+        Unit closest = findClosestOnOtherTeam("UNIT");
+        if(canAttack(closest)){
+            fireAttack(closest);
+        }else if(closest != null && distance2(closest) < Const.AGGROUNITRANGE2) {
+            attackUnitOrMoveTowards(closest, 0);
+        }else{
+            closest = findClosestOnOtherTeam("HERO");
+            if(canAttack(closest)){
+                fireAttack(closest);
+            }else if(closest != null && distance2(closest) < Const.AGGROUNITRANGE2 && allowedToAttack(closest)) {
+                attackUnitOrMoveTowards(closest, 0);
+            }else moveAttackTowards(targetPoint);
+        }
     }
 }

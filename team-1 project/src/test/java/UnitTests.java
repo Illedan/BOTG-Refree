@@ -1,16 +1,14 @@
-import java.io.Console;
+import com.codingame.game.*;
+import com.codingame.gameengine.core.GameManager;
+import com.codingame.gameengine.module.entities.Entity;
+import com.codingame.gameengine.module.entities.GraphicEntityModule;
+import tooltipModule.TooltipModule;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import com.codingame.game.*;
-import com.codingame.gameengine.core.GameManager;
-import com.codingame.gameengine.module.entities.Entity;
-import com.codingame.gameengine.module.entities.GraphicEntityModule;
-
-import tooltipModule.TooltipModule;
 
 public class UnitTests {
 
@@ -358,7 +356,7 @@ public class UnitTests {
                 && assertDouble(150, hero.y);
     }
 
-    public boolean lancer_spell2_Test(){
+    public boolean valkyrie_spell2_Test(){
         Hero hero = createAndReplaceHero("VALKYRIE", 40, 40, 100, 200, 100);
 
         int prevMs = hero.moveSpeed;
@@ -393,7 +391,37 @@ public class UnitTests {
         return result;
     }
 
-    public boolean lancer_spell1_Test(){
+    public boolean valkyrie_spell1_nextToCloserInvisUnit_Test(){
+        Hero hero = createAndReplaceHero("VALKYRIE", 40, 40, 100, 200, 100);
+        Hero hero1 = players.get(1).heroes.get(0);
+        Const.game.allUnits.add(hero1);
+        hero1.x=300;
+        hero1.y = 40;
+        int health = hero1.health;
+        hero1.visible = false;
+        hero1.becomingInvis = true;
+
+        Const.game.bushes.add(new Bush(300,40));
+
+        LaneUnit unit4 = new LaneUnit(350,40,500,1,100, new Point(300,40), players.get(1));
+        unit4.range=100;
+        unit4.damage=55;
+        Const.game.allUnits.add(unit4);
+
+        try
+        {
+            doHeroCommandAndRun(players.get(0), "JUMP " + 300 + " " + 40, 5);
+        }catch (Exception e){
+            return false;
+        }
+
+        return assertValue(500-hero.damage, unit4.health)
+                && assertValue(health, hero1.health)
+                && assertDouble(290, hero.x)
+                && assertDouble(40, hero.y);
+    }
+
+    public boolean valkyrie_spell1_Test(){
         Hero hero = createAndReplaceHero("VALKYRIE", 40, 40, 100, 200, 100);
 
         LaneUnit unit4 = new LaneUnit(350,40,500,1,100, new Point(300,40), players.get(1));
@@ -414,7 +442,7 @@ public class UnitTests {
     }
 
 
-    public boolean lancer_doubleFlip_Test(){
+    public boolean valkyrie_doubleFlip_Test(){
         Hero hero = createAndReplaceHero("VALKYRIE", 400, 500, 100, 200, 100);
         Hero hero0 = Factories.generateHero("VALKYRIE", players.get(0), new Point(350,550));
         players.get(0).addHero(hero0);
@@ -485,7 +513,7 @@ public class UnitTests {
     }
 
 
-    public boolean lancer_spell0_UnitDraggedByStrange_Test(){
+    public boolean valkyrie_spell0_UnitDraggedByStrange_Test(){
         Hero hero = createAndReplaceHero("VALKYRIE", 400, 500, 100, 200, 100);
         Hero hero0 = Factories.generateHero("DOCTOR_STRANGE", players.get(0), new Point(350,550));
         players.get(0).addHero(hero0);
@@ -521,7 +549,7 @@ public class UnitTests {
     }
 
 
-    public boolean lancer_spell0_LongerDist_Test(){
+    public boolean valkyrie_spell0_LongerDist_Test(){
         Hero hero = createAndReplaceHero("VALKYRIE", 455, 500, 100, 200, 100);
 
         LaneUnit unit4 = new LaneUnit(300,500,500,1,200, new Point(400,500), players.get(1));
@@ -541,7 +569,7 @@ public class UnitTests {
                 && assertDouble(500-hero.damage*0.4, unit4.health);
     }
 
-    public boolean lancer_spell0_Test(){
+    public boolean valkyrie_spell0_Test(){
         Hero hero = createAndReplaceHero("VALKYRIE", 40, 40, 100, 200, 100);
 
         LaneUnit unit4 = new LaneUnit(30,50,500,1,200, new Point(40,40), players.get(1));
@@ -560,7 +588,7 @@ public class UnitTests {
                 && assertDouble(30, unit4.y);
     }
 
-    public boolean knight_spell2_OutSideRange_NoBash_Test(){
+    public boolean hulk_spell2_OutSideRange_NoBash_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
 
         LaneUnit unit4 = new LaneUnit(500,50,500,1,500, new Point(40,40), players.get(1));
@@ -579,7 +607,7 @@ public class UnitTests {
                 && assertValue(45, hero.health);
     }
 
-    public boolean knight_spell2_Test(){
+    public boolean hulk_spell2_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
 
         LaneUnit unit4 = new LaneUnit(50,50,500,1,200, new Point(40,40), players.get(1));
@@ -600,7 +628,7 @@ public class UnitTests {
     }
 
 
-    public boolean knight_Cleric_spell1_doubleShiel_HULKBiggest_Test(){
+    public boolean hulk_DRstrange_spell1_doubleShiel_HULKBiggest_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 30000, 3000, 100);
         Hero hero0 = Factories.generateHero("DOCTOR_STRANGE", players.get(0), new Point(90,90));
         players.get(0).addHero(hero0);
@@ -660,7 +688,7 @@ public class UnitTests {
     }
 
 
-    public boolean knight_Cleric_spell1_doubleShiel_Test(){
+    public boolean hulk_DRstrange_spell1_doubleShiel_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         Hero hero0 = Factories.generateHero("DOCTOR_STRANGE", players.get(0), new Point(90,90));
         players.get(0).addHero(hero0);
@@ -715,7 +743,7 @@ public class UnitTests {
         return result && assertValue(0, hero.getShield());
     }
 
-    public boolean knight_spell1_Test(){
+    public boolean hulk_spell1_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
 
         LaneUnit unit4 = new LaneUnit(50,50,500,1,200, new Point(40,40), players.get(1));
@@ -837,7 +865,7 @@ public class UnitTests {
     }
 
 
-    public boolean knight_spell0_JumpWhenBashed_Test(){
+    public boolean hulk_spell0_JumpWhenBashed_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         players.get(1).heroes.clear();
         Hero hero0 = Factories.generateHero("HULK", players.get(1), new Point(60, 60));
@@ -870,7 +898,7 @@ public class UnitTests {
     }
 
 
-    public boolean knight_bash_lancerFlips_Test(){
+    public boolean hulk_bash_valkyrieFlips_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         Hero hero0 = Factories.generateHero("VALKYRIE", players.get(0), new Point(150, 40));
         hero0.team=1;
@@ -899,7 +927,7 @@ public class UnitTests {
                 && assertDouble(150-hero.damage, hero0.health);
     }
 
-    public boolean knight_lancerFlips_spell0_Test(){
+    public boolean hulk_valkyrieFlips_spell0_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         Hero hero0 = Factories.generateHero("VALKYRIE", players.get(0), new Point(150, 40));
         hero0.team=1;
@@ -928,7 +956,7 @@ public class UnitTests {
                 && assertDouble(150, hero0.health);
     }
 
-    public boolean knight_jumpsKnight_NoAttackDone_bothBlinks_Test(){
+    public boolean hulk_jumpshulk_NoAttackDone_bothBlinks_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(60, 45));
         hero0.team=1;
@@ -1077,7 +1105,7 @@ public class UnitTests {
                 && assertValue(1338, players.get(1).gold);
     }
 
-    public boolean knight_jumpsKnight_spell0_Test(){
+    public boolean hulk_jumpshulk_spell0_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
         Hero hero0 = Factories.generateHero("HULK", players.get(0), new Point(300, 45));
         hero0.team=1;
@@ -1105,7 +1133,7 @@ public class UnitTests {
                 && assertDouble(100, hero.health);
     }
 
-    public boolean knight_spell0_Test(){
+    public boolean hulk_spell0_Test(){
         Hero hero = createAndReplaceHero("HULK", 40, 40, 100, 200, 100);
 
         LaneUnit unit4 = new LaneUnit(300,40,500,1,200, new Point(40,40), players.get(1));
@@ -1133,7 +1161,7 @@ public class UnitTests {
         return result && assertValue(200, unit4.moveSpeed);
     }
 
-    public boolean cleric_Pull_CheckBug_Test(){
+    public boolean DRstrange_Pull_CheckBug_Test(){
         Hero hero = createAndReplaceHero("DOCTOR_STRANGE", 823, 546, 100, 200, 100);
         players.get(1).heroes.clear();
         Hero hero1 = Factories.generateHero("VALKYRIE", players.get(1), new Point(989, 590));
@@ -1211,7 +1239,7 @@ public class UnitTests {
         return assertDouble(1100, players.get(1).heroes.get(0).x);
     }
 
-    public boolean cleric_pullTower_Test(){
+    public boolean DRstrange_pullTower_Test(){
         createAndReplaceHero("DOCTOR_STRANGE", 400, 400, 100, 200, 100);
         Tower tower = players.get(0).tower;
         Const.game.allUnits.add(tower);
@@ -1228,7 +1256,7 @@ public class UnitTests {
         return assertDouble(500, tower.x) && assertDouble(500, tower.y);
     }
 
-    public boolean cleric_spell2_DrainMana_Test(){
+    public boolean DRstrange_spell2_DrainMana_Test(){
         createAndReplaceHero("DOCTOR_STRANGE", 400, 400, 100, 200, 100);
         Hero hero0 = players.get(0).heroes.get(0);
         int prevMana = hero0.mana;
@@ -1253,9 +1281,9 @@ public class UnitTests {
                 && assertValue(prevMana-hero0.skills[2].manaCost+hero0.manaregeneration+hero1.manaregeneration*3+5, hero0.mana);
     }
 
-    public boolean cleric_spell2_verifyALLDirections_Test(){
+    public boolean DRstrange_spell2_verifyALLDirections_Test(){
 
-        for(double i = 0; i < 360; i+=0.1) {
+        for(double i = 0; i < 360; i+=0.5) {
             double angle = Math.toRadians(i);
             double xTarget = 720+Math.cos(angle)*1000;
             double yTarget = 490+Math.sin(angle)*1000;
@@ -1290,7 +1318,7 @@ public class UnitTests {
         return true;
     }
 
-    public boolean cleric_spell2_Test(){
+    public boolean DRstrange_spell2_Test(){
         createAndReplaceHero("DOCTOR_STRANGE", 400, 400, 100, 200, 100);
         Hero hero0 = players.get(0).heroes.get(0);
         int prevMana = hero0.mana;
@@ -1312,7 +1340,7 @@ public class UnitTests {
                 && assertValue(prevMana-hero0.skills[2].manaCost+hero0.manaregeneration, hero0.mana);
     }
 
-    public boolean cleric_spell1_ShieldNotRemoved_Test(){
+    public boolean DRstrange_spell1_ShieldNotRemoved_Test(){
         Hero hero0 = createAndReplaceHero("DOCTOR_STRANGE", 40, 40, 100, 200, 100);
 
         LaneUnit unit3 = new LaneUnit(55,56,10,1,100, new Point(60,60), players.get(0));
@@ -1332,7 +1360,7 @@ public class UnitTests {
                 && assertValue(shield-unit3.damage, hero0.shield);
     }
 
-    public boolean cleric_spell1_Test(){
+    public boolean DRstrange_spell1_Test(){
         Hero hero0 = createAndReplaceHero("DOCTOR_STRANGE", 40, 40, 100, 200, 100);
 
         LaneUnit unit3 = new LaneUnit(55,56,10,1,100, new Point(60,60), players.get(0));
@@ -1352,7 +1380,7 @@ public class UnitTests {
                 && assertValue(0, hero0.shield);
     }
 
-    public boolean cleric_spell0_Test(){
+    public boolean DRstrange_spell0_Test(){
         Hero hero0 = createAndReplaceHero("DOCTOR_STRANGE", 40, 40, 100, 500, 100);
 
         LaneUnit unit3 = new LaneUnit(55,56,10,0,100, new Point(60,60), players.get(0));
@@ -1376,7 +1404,7 @@ public class UnitTests {
                 && assertValue(50, unit4.health);
     }
 
-    public boolean cleric_spell0_NoAboveMaxHealth_Test(){
+    public boolean DRstrange_spell0_NoAboveMaxHealth_Test(){
         Hero hero0 = createAndReplaceHero("DOCTOR_STRANGE", 40, 40, 100, 142, 100);
 
         LaneUnit unit3 = new LaneUnit(55,56,10,0,100, new Point(60,60), players.get(0));
@@ -1399,6 +1427,36 @@ public class UnitTests {
                 && assertDouble((int)(50+(hero0.mana+50)*0.2), unit3.health)
                 && assertValue(50, unit4.health);
     }
+
+    public boolean TwoVSoneInbush_Attack_wait_damagedealth_Test(){
+        Hero hero0 = createAndReplaceHero("DEADPOOL", 343, 380, 1000000, 1000000, 100);
+        int preHealth = hero0.health;
+        Hero hero1 = players.get(1).heroes.get(0);
+        hero1.x = 343;
+        hero1.y = 380;
+        Hero hero2 = Factories.generateHero("IRONMAN", players.get(1), new Point(343,380));
+        players.get(1).heroes.add(hero2);
+        hero2.team = 1;
+        hero1.team = 1;
+        hero0.team = 0;
+        Const.game.allUnits.add(hero2);
+        Const.game.bushes.add(new Bush(343, 380));
+        Const.game.allUnits.add(hero1);
+        for(int i = 0; i < 10; i++) {
+            try {
+                Const.game.beforeTurn(5, players);
+                players.get(0).handlePlayerOutputs(new String[]{"WAIT"});
+                players.get(1).handlePlayerOutputs(new String[]{"ATTACK " + hero0.id, "ATTACK " + hero0.id});
+                Const.game.handleTurn(players);
+            }catch (Exception e){
+                System.err.println(e.getStackTrace());
+                return false;
+            }
+        }
+
+        return assertValue(preHealth-hero2.damage*10-hero1.damage*10, hero0.health);
+    }
+
 
 
     public boolean heroDiesInBush_cantseeEnemy_Test(){
@@ -1424,7 +1482,7 @@ public class UnitTests {
         return result && assertValue(false, hero0.visible);
     }
 
-    public boolean ninja_spell2_InBush_Test(){
+    public boolean deadpool_spell2_InBush_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 40, 40, 100, 142, 100);
         Hero hero1 = players.get(1).heroes.get(0);
         hero1.x = 60;
@@ -1456,7 +1514,7 @@ public class UnitTests {
     }
 
 
-    public boolean ninja_spell2_Test(){
+    public boolean deadpool_spell2_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 40, 40, 100, 142, 100);
         int heroHealth = hero0.health;
 
@@ -1490,7 +1548,7 @@ public class UnitTests {
     }
 
 
-    public boolean ninja_spell1_TeleportIntoWire_Test(){
+    public boolean deadpool_spell1_TeleportIntoWire_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 200, 200, 100, 142, 100);
 
         Hero hero1 = players.get(1).heroes.get(0);
@@ -1514,7 +1572,7 @@ public class UnitTests {
     }
 
 
-    public boolean ninja_spell1_InstantStop_Test(){
+    public boolean deadpool_spell1_InstantStop_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 195, 195, 100, 142, 100);
 
         Hero hero1 = players.get(1).heroes.get(0);
@@ -1537,7 +1595,7 @@ public class UnitTests {
                 && assertDouble(200, hero1.x) && assertDouble(200, hero1.y);
     }
 
-    public boolean ninja_spell1_Test(){
+    public boolean deadpool_spell1_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 40, 40, 100, 142, 100);
 
         Hero hero1 = players.get(1).heroes.get(0);
@@ -1557,7 +1615,7 @@ public class UnitTests {
     }
 
 
-    public boolean ninja_spell0_diesNoDamage_Test(){
+    public boolean deadpool_spell0_diesNoDamage_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 40, 40, 100, 142, 100);
         int hero0Health = hero0.health;
 
@@ -1576,7 +1634,39 @@ public class UnitTests {
         return assertValue(true, hero0.health <= 0) && assertValue(unit0Health, unit.health);
     }
 
-    public boolean ninja_spell0_Test(){
+    public boolean deadpool_spell0_InvisTargeted_Test(){
+        Hero hero0 = createAndReplaceHero("DEADPOOL", 40, 40, 100, 142, 100);
+        Hero hero1 = players.get(1).heroes.get(0);
+        hero1.x = 40;
+        hero1.y = 40;
+        hero1.visible = false;
+        Const.game.bushes.add(new Bush(40,40));
+        Const.game.allUnits.add(hero1);
+
+        LaneUnit unit = createPeasant(3, 1);
+        LaneUnit unit2 = createPeasant(5, 1);
+        unit2.x = 150;
+
+        int hero0Health = hero0.health;
+        int hero1Health = hero1.health;
+        int unit0Health = unit.health;
+        int unit1Health = unit2.health;
+
+        try {
+            doHeroCommandAndRun(players.get(0), "COUNTER", 5);
+        }catch (Exception e){
+            System.err.println(e.getStackTrace());
+            return false;
+        }
+
+        return assertDouble(hero0Health, hero0.health)
+                && assertValue(unit0Health, unit.health)
+                && assertDouble(hero1Health-(unit.damage+unit2.damage)*1.5, hero1.health)
+                && assertValue(unit1Health, unit2.health)
+                && assertValue(true, hero1.visible);
+    }
+
+    public boolean deadpool_spell0_Test(){
         Hero hero0 = createAndReplaceHero("DEADPOOL", 40, 40, 100, 142, 100);
         int hero0Health = hero0.health;
 
@@ -2211,6 +2301,9 @@ public class UnitTests {
         public void addObstacle(Bush obstacle){
 
         }
+        @Override
+        public void addSprite(Unit unit, int team, double amplitude) {       }
+
         @Override
         public void addSprite(Unit unit, int team) {       }
 

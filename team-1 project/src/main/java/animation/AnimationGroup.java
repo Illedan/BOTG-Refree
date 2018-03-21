@@ -36,7 +36,7 @@ public class AnimationGroup {
     public void addShield(){
         if(shield != null || unit.getShield() <= 0) return;
         if(_shields.size()==0) _shields.add(module.createCircle().setFillColor(0xffffff, Curve.LINEAR).setFillAlpha(0.4).setLineWidth(3, Curve.ELASTIC).setZIndex(100).setRadius(55).setLineColor(0xcccccc));
-        shield = _shields.get(0).setScale(1, Curve.IMMEDIATE);
+        shield = _shields.get(0).setScale(1, Curve.IMMEDIATE).setAlpha(1);
         _shields.remove(shield);
         sprite.add(shield);
         module.commitEntityState(Const.game.t, shield);
@@ -48,19 +48,19 @@ public class AnimationGroup {
         _shields.add(shield);
         sprite.remove(shield);
         shield.setAlpha(0, Curve.IMMEDIATE);
-        module.commitEntityState(Const.game.t, shield);
+        module.commitEntityState(Math.min(1.0, Const.game.t), shield);
+        shield = null;
     }
 
     public void explodeShield(){
         if(shield == null) return;
-        double t = Math.max(0,Const.game.t-0.1);
+        double t = Math.min(1.0, Math.max(0,Const.game.t-0.1));
         module.commitEntityState(t, shield);
-        shield.setScale(1.5, Curve.ELASTIC).setAlpha(0);
+        shield.setScale(1.5, Curve.ELASTIC).setAlpha(0, Curve.ELASTIC);
         module.commitEntityState(Math.min(1.0, t+0.1), shield);
         _shields.add(shield);
         sprite.remove(shield);
-        shield.setAlpha(0, Curve.IMMEDIATE);
-        module.commitEntityState(Math.min(1.0, t+0.15), shield);
+        shield = null;
     }
 
     public Entity updateAngle(double rotation){

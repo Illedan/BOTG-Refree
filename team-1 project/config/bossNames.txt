@@ -1,0 +1,9 @@
+Gold: Star-Lord 
+Silver: SpiderBoss 
+Bronze: BossThanos
+Wood1: BossWidow 
+Wood2: CaptainBoss
+Wood3: BossPanther
+Wood4: RocketBoss
+Wood5: I-AM-BOSS-GROOT
+Wood6: DoubleHulk

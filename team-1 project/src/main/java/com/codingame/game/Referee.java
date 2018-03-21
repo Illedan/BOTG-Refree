@@ -30,6 +30,9 @@ public class Referee extends AbstractReferee {
                 Const.TOWERHEALTHSCALE = 0.5;
                 Const.IGNOREBUSHES = true;
                 Const.Rounds = 200;
+                Const.TOWERDAMAGE = 1;
+                Const.MELEE_UNIT_COUNT = 0;
+                Const.RANGED_UNIT_COUNT = 0;
             }case 1:{
                 Const.HEROCOUNT = 1;
                 Const.IGNORESKILLS = true;
@@ -37,7 +40,28 @@ public class Referee extends AbstractReferee {
                 Const.TOWERHEALTHSCALE = 0.5;
                 Const.IGNOREBUSHES = true;
                 Const.Rounds = 200;
+                Const.TOWERDAMAGE = 1;
+                Const.MELEE_UNIT_COUNT = 0;
+                Const.RANGED_UNIT_COUNT = 0;
             }case 2:{
+                Const.HEROCOUNT = 1;
+                Const.IGNORESKILLS = true;
+                Const.REMOVEFORESTCREATURES = true;
+                Const.TOWERHEALTHSCALE = 0.5;
+                Const.IGNOREBUSHES = true;
+                Const.Rounds = 200;
+                Const.TOWERDAMAGE = 1;
+            }case 3:{
+                Const.HEROCOUNT = 1;
+                Const.IGNORESKILLS = true;
+                Const.REMOVEFORESTCREATURES = true;
+                Const.TOWERHEALTHSCALE = 0.5;
+                Const.Rounds = 200;
+            }case 4:{
+                Const.HEROCOUNT = 1;
+                Const.IGNORESKILLS = true;
+                Const.Rounds = 200;
+            }case 5:{
                 Const.IGNORESKILLS = true;
                 Const.Rounds = 200;
             }default:{

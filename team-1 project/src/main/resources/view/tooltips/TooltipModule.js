@@ -90,8 +90,10 @@ function getMouseMoveFunc(tooltip, container, module) {
 
             tooltip.visible = true;
             const extra = module.currentFrame.extraText[show];
-            if (extra && extra.length) {
+            if (extra && extra.length && String(extra).valueOf() != "0") {
               tooltipBlock += "\n" + extra;
+            } else if (extra && String(extra).valueOf() == "0") {
+              tooltip.visible = false; // this is here because tooltip shows up for dead units, including groots
             }
             tooltipBlocks.push(tooltipBlock);
           }

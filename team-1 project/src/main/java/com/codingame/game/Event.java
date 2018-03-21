@@ -56,6 +56,7 @@ public abstract class Event {
     }
 
     protected void runSilentlyTowards(Unit unit, Point targetPoint){
+        if(unit.forceVY != 0 || unit.forceVX != 0) return;
         double targetDist = targetPoint.distance(unit);
         double coef = (((double) unit.moveSpeed)) / targetDist;
         unit.vx = (targetPoint.x - unit.x) * coef;
@@ -73,12 +74,13 @@ public abstract class Event {
     }
 
 
-    protected Unit getClosestUnitInRange(Point root, double range, int team, boolean targetEnemies, Unit ignoredUnit){
+    protected Unit getClosestUnitInRange(Point root, double range, int team, boolean allowInvis, Unit ignoredUnit){
         double closestDist = Const.MAXDOUBLE;
         Unit closest = null;
         for(Unit unit : Const.game.allUnits){
-            if(unit == ignoredUnit || (unit.team == team && targetEnemies) || (unit.team != team && !targetEnemies)) continue;
+            if(unit == ignoredUnit || unit.team == team) continue;
             if(unit instanceof Tower) continue;
+            if(!unit.visible && !allowInvis) continue;
             double dist = unit.distance2(root);
             if(dist < closestDist && dist <= range*range) {
                 closestDist = dist;
@@ -117,8 +119,8 @@ public abstract class Event {
 
         @Override
         ArrayList<Unit> onEventTime(double currentTime) {
-            unit.vx = 0;
-            unit.vy = 0;
+            unit.vx = unit.forceVX;
+            unit.vy = unit.forceVY;
             unit.moving = false;
             if(currentTime < 0.99)
                 Const.viewController.addEffect(unit, new Point(unit.x+unit.vx, unit.y+unit.vy), "default", 1.0);
@@ -178,6 +180,7 @@ public abstract class Event {
 
         @Override
         ArrayList<Unit> onEventTime(double currentTime) {
+            if(unit.stunTime > 0 || (unit.forceVX != 0 || unit.forceVY != 0)) return EMPTYLIST;
             unit.vx = vx;
             unit.vy = vy;
 
@@ -334,7 +337,7 @@ public abstract class Event {
 
         @Override
         ArrayList<Unit> onEventTime(double currentTime) {
-            Unit toHit = getClosestUnitInRange(this.unit, this.unit.range, this.unit.team, true, this.unit);
+            Unit toHit = getClosestUnitInRange(this.unit, this.unit.range, this.unit.team, false, this.unit);
             if(toHit != null) this.unit.fireAttack(toHit);
             return EMPTYLIST;
         }
@@ -431,7 +434,7 @@ public abstract class Event {
                 Unit target = Const.game.allUnits.get(i);
                 if(unit.team == target.team && hitEnemies) continue;
                 if(unit.team != target.team && !hitEnemies) continue;
-                if((unit instanceof Tower)) continue;
+                if((target instanceof Tower)) continue;
 
                 double dist2 =targetPos.distance2(target);
                 if(dist2 <= range*range){
@@ -531,7 +534,7 @@ public abstract class Event {
         @Override
         ArrayList<Unit> onEventTime(double currentTime) {
             for(Unit target : Const.game.allUnits){
-                if(unit instanceof Tower || unit.team == target.team) continue;
+                if(target instanceof Tower || unit.team == target.team) continue;
 
                 double dist2 = unit.distance2(target);
                 if(dist2 <= Const.EXPLOSIVESHIELDRANGE2){
@@ -723,19 +726,18 @@ public abstract class Event {
 
             Unit closest = this.unit.findClosestOnOtherTeam();
             if(unit.canAttack(closest)){
-                this.unit.vx = 0;
-                this.unit.vy = 0;
+                unit.vx = unit.forceVX;
+                unit.vy = unit.forceVY;
                 unit.fireAttack(closest);
                 return createListOfUnit();
             }
 
-            if(closest == null || closest.isDead){
-                this.unit.vx = 0;
-                this.unit.vy = 0;
+            if(currentTime <= 1.0 && closest != null && !closest.isDead) unit.attackUnitOrMoveTowards(closest, currentTime);
+            else{
+                unit.vx = unit.forceVX;
+                unit.vy = unit.forceVY;
                 return createListOfUnit();
             }
-
-            if(currentTime <= 1.0) unit.attackUnitOrMoveTowards(closest, currentTime);
             return EMPTYLIST;
         }
 
@@ -787,8 +789,8 @@ public abstract class Event {
 
         @Override
         ArrayList<Unit> onEventTime(double currentTime) {
-            this.unit.vx = 0;
-            this.unit.vy = 0;
+            this.unit.vx = unit.forceVX;
+            this.unit.vy = unit.forceVY;
             if(currentTime < 0.99)
                 Const.viewController.addEffect(unit, new Point(unit.x+unit.vx, unit.y+unit.vy), "default", 1.0);
 
